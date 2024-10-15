@@ -6,7 +6,7 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
-import Image from 'next/image'
+import { Badge } from "@/components/ui/badge"
 
 export default function Post({post}){
 
@@ -25,10 +25,9 @@ export default function Post({post}){
             </CardContent>
             <CardFooter>
                 <div className="w-full flex justify-between items-center">
-                    <p>{post.category}</p>
+                    <Badge variant="secondary">{post.category}</Badge>
                     <CardDescription>{post.author}</CardDescription>
                 </div>
-                
             </CardFooter>
         </Card>
     )
