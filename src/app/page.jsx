@@ -4,14 +4,14 @@ import postsJson from '@/app/json/posts.json'
 export default function Home() {
   return (
     // Vista inicial posts
-    <div className="w-full h-full">
+    <div className="w-full h-full py-11">
       <main className="">
-        <div className="grid grid-cols-2 place-content-center place-items-center">
+        <div className="gridResponsive">
         {
           postsJson.map(post=>{
             return(
               <>
-                <Post key={post._id}/>
+                <Post post={post} key={post._id}/>
               </>
             )
           })

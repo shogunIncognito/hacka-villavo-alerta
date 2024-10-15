@@ -6,7 +6,7 @@
       "ai_response": "AI is revolutionizing modern applications by enhancing automation, providing deep insights, and improving user experiences.",
       "category": "Technology",
       "author": "John Doe",
-      "image": ["ai-tech.jpg", "ai-implementation.png"],
+      "image": ["https://imagenes.eltiempo.com/files/image_652_366/uploads/2023/10/02/651b1faf35780.jpeg"],
       "createdAt": "2024-10-15T10:00:00Z",
       "updatedAt": "2024-10-15T12:00:00Z"
     },
@@ -17,7 +17,7 @@
       "ai_response": "The future of remote work looks promising, with more flexible working environments and digital tools enhancing productivity.",
       "category": "Business",
       "author": "Jane Smith",
-      "image": ["remote-work.jpg", "virtual-meeting.png"],
+      "image": ["https://imagenes.eltiempo.com/files/image_652_366/uploads/2023/10/02/651b1faf35780.jpeg"],
       "createdAt": "2024-10-14T09:30:00Z",
       "updatedAt": "2024-10-14T11:45:00Z"
     },
@@ -28,7 +28,7 @@
       "ai_response": "AI in healthcare allows for faster diagnostics, more personalized treatment options, and overall improved patient care.",
       "category": "Health",
       "author": "Dr. Emily Clark",
-      "image": ["ai-healthcare.jpg"],
+      "image": ["https://imagenes.eltiempo.com/files/image_652_366/uploads/2023/10/02/651b1faf35780.jpeg"],
       "createdAt": "2024-10-13T14:20:00Z",
       "updatedAt": "2024-10-13T15:00:00Z"
     },
@@ -39,7 +39,7 @@
       "ai_response": "Technological advancements, including AI and renewable energy, play a critical role in addressing climate change challenges.",
       "category": "Environment",
       "author": "Mark Green",
-      "image": ["climate-tech.jpg", "solar-panels.png"],
+      "image": ["https://imagenes.eltiempo.com/files/image_652_366/uploads/2023/10/02/651b1faf35780.jpeg"],
       "createdAt": "2024-10-12T08:50:00Z",
       "updatedAt": "2024-10-12T10:30:00Z"
     }
