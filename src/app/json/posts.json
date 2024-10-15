@@ -1,0 +1,46 @@
+[
+    {
+      "_id": "1",
+      "title": "Exploring AI in Modern Applications",
+      "description": "A deep dive into the role of AI in modern applications and how it transforms industries.",
+      "ai_response": "AI is revolutionizing modern applications by enhancing automation, providing deep insights, and improving user experiences.",
+      "category": "Technology",
+      "author": "John Doe",
+      "image": ["ai-tech.jpg", "ai-implementation.png"],
+      "createdAt": "2024-10-15T10:00:00Z",
+      "updatedAt": "2024-10-15T12:00:00Z"
+    },
+    {
+      "_id": "2",
+      "title": "The Future of Remote Work",
+      "description": "An exploration of how remote work is shaping the future of employment and collaboration.",
+      "ai_response": "The future of remote work looks promising, with more flexible working environments and digital tools enhancing productivity.",
+      "category": "Business",
+      "author": "Jane Smith",
+      "image": ["remote-work.jpg", "virtual-meeting.png"],
+      "createdAt": "2024-10-14T09:30:00Z",
+      "updatedAt": "2024-10-14T11:45:00Z"
+    },
+    {
+      "_id": "3",
+      "title": "Health and AI: A New Era of Medicine",
+      "description": "How AI is transforming healthcare, from diagnostics to personalized treatment plans.",
+      "ai_response": "AI in healthcare allows for faster diagnostics, more personalized treatment options, and overall improved patient care.",
+      "category": "Health",
+      "author": "Dr. Emily Clark",
+      "image": ["ai-healthcare.jpg"],
+      "createdAt": "2024-10-13T14:20:00Z",
+      "updatedAt": "2024-10-13T15:00:00Z"
+    },
+    {
+      "_id": "4",
+      "title": "Climate Change and Technological Solutions",
+      "description": "Analyzing how technology can help combat the effects of climate change and promote sustainability.",
+      "ai_response": "Technological advancements, including AI and renewable energy, play a critical role in addressing climate change challenges.",
+      "category": "Environment",
+      "author": "Mark Green",
+      "image": ["climate-tech.jpg", "solar-panels.png"],
+      "createdAt": "2024-10-12T08:50:00Z",
+      "updatedAt": "2024-10-12T10:30:00Z"
+    }
+  ]
