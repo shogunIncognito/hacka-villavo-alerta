@@ -79,3 +79,14 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.gridResponsive{
+  display: grid;
+  grid-template-columns: repeat(
+      auto-fit,
+      minmax(500px,2fr)
+  );
+  place-content: center;
+  place-items: center;
+  gap: 20px;
+}
