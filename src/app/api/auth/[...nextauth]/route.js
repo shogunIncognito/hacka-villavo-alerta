@@ -1,5 +1,5 @@
 import { dbConnect } from '@/db/db_config'
-import User from '@/models/User'
+import Admin from '@/models/Admin'
 import bcrypt from 'bcrypt'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
@@ -15,20 +15,18 @@ const handler = NextAuth({
       async authorize (credentials) {
         try {
           await dbConnect()
-
-          const existUser = await User.findOne({ email: credentials?.email }).select('+password')
-          console.log({ existUser }); // llega pass?
           
-          if (existUser === null) throw new Error('User not found')
-
-          const isValidPassword = await bcrypt.compare(credentials.password, existUser.password)
+          const existAdmin = await Admin.findOne({ email: credentials?.email }).select('+password')
+          
+          if (existAdmin === null) throw new Error('User not found')
+          const isValidPassword = await bcrypt.compare(credentials.password, existAdmin.password)
           if (!isValidPassword) throw new Error('Invalid password')
 
           return {
-            username: existUser.username,
-            email: existUser.email,
-            superAdmin: existUser.role,
-            _id: existUser._id
+            username: existAdmin.username,
+            email: existAdmin.email,
+            superAdmin: existAdmin.role,
+            _id: existAdmin._id
           } 
         } catch (error) {
           console.log({ error })
@@ -38,7 +36,7 @@ const handler = NextAuth({
     })
   ],
   callbacks: {
-    async jwt ({ token, user }) {
+    async jwt ({ token, user }) {      
       return { ...token, ...user }
     },
     async session ({ session, token }) {
@@ -51,7 +49,7 @@ const handler = NextAuth({
     }
   },
   pages: {
-    signIn: '/auth/'
+    signIn: '/auth/admin'
   }
 })
 

@@ -3,7 +3,7 @@
 import Post from "@/components/Post";
 import { useEffect, useState } from "react";
 import { axiosGet } from "@/helpers/requests/get";
-import { usePosts } from "@/context/posts";
+import { usePosts } from "@/store/posts";
 
 export default function Home() {
 

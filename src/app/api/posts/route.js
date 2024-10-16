@@ -14,7 +14,8 @@ export async function POST(req) {
     await dbConnect()
 
     const post = await req.json()
-    const AIPostConclusion = await AIConclusions(post)
+
+    const AIPostConclusion = post.generateAIResponse ? await AIConclusions(post) : null
     
     const newPost = new Post({
         ...post,
