@@ -12,8 +12,7 @@ export default function Home() {
   useEffect(() => {
     axiosGet({url:'/api/posts'})
       .then(res=> setPosts(res))
-  }, [])
-  
+  }, []) 
 
   return (
     // Vista inicial posts
