@@ -7,27 +7,28 @@ import { usePosts } from "@/context/posts";
 
 export default function Home() {
 
-  const {getPosts, setPosts} = usePosts()
+  const { getPosts, setPosts } = usePosts()
 
   useEffect(() => {
-    axiosGet({url:'/api/posts'})
-      .then(res=> setPosts(res))
-  }, []) 
+    axiosGet({ url: '/api/posts' })
+      .then(res => {
+        const sortedPosts = res.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setPosts(sortedPosts);
+      })
+  }, [])
 
   return (
     // Vista inicial posts
     <div className="w-full h-full py-11">
       <main className="">
-        <div className="gridResponsive">
-        {
-          getPosts.map(post=>{
-            return(
-              <>
-                <Post post={post} key={post._id}/>
-              </>
-            )
-          })
-        }
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {
+            getPosts.map(post => {
+              return (
+                <Post post={post} key={post._id} />
+              )
+            })
+          }
         </div>
       </main>
     </div>
