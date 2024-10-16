@@ -1,5 +1,5 @@
-import * as React from "react"
- 
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -18,9 +18,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-  
+import { Switch } from "@/components/ui/switch"
+import FileUpload from "@/components/InputFIle"
+import { useState } from "react"
+import { axiosPost } from "@/helpers/requests/post"
+
 
 export default function AddPost(){
+
+    const [title, setTitle] = useState("")  
+    const [description, setDescription] = useState("")  
+    const [category, setCategory] = useState("")  
+    const [switchValidate, setSwitchValidate] = useState(false)
+    const [file, setFile] = useState([])
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        // const formData = new FormData();
+        // formData.append("title", title.target.value);
+        // formData.append("description", description.target.value);
+        // formData.append("category", category);
+        // formData.append("generateAIResponse", switchValidate);
+        // formData.append("image", file);
+        
+        axiosPost({url: '/api/posts', data: {
+            title: title.target.value,
+            description: description.target.value,
+            category: category,
+            generateAIResponse: switchValidate,
+            image: "https://cblawgroup.com/wp-content/uploads/2022/12/shutterstock_1721672671-1024x576.jpg",
+            author: "Juanito"
+        }})
+            .then(res=> console.log(res))
+            .catch(error=> console.log(error))
+      }
 
     return (
         <>
@@ -31,33 +63,55 @@ export default function AddPost(){
                         <CardDescription>Deploy your new project in one-click.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form>
+                        <form onSubmit={onSubmit}>
                         <div className="grid w-full items-center gap-4">
-                            <div className="flex space-y-1.5">
-                                <Label htmlFor="name">Name</Label>
-                                <Input id="name" placeholder="Name of your project" />
+                            <div className="flex justify-center items-center gap-9">
+                                <div className="w-[30%]">
+                                    <Label className="justify-start items-center" htmlFor="title">Título</Label>
+                                </div>
+                                <div className="w-[70%]">
+                                    <Input onChange={(e)=>setTitle(e)} className="w-full" id="name" placeholder="Ingrese el título" />
+                                </div>
                             </div>
-                            <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="framework">Framework</Label>
-                            <Select>
-                                <SelectTrigger id="framework">
-                                <SelectValue placeholder="Select" />
-                                </SelectTrigger>
-                                <SelectContent position="popper">
-                                <SelectItem value="next">Next.js</SelectItem>
-                                <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                                <SelectItem value="astro">Astro</SelectItem>
-                                <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                                </SelectContent>
-                            </Select>
+                            <div className="flex justify-center items-center gap-9">
+                                <div className="w-[30%]">
+                                    <Label className="justify-start items-center" htmlFor="description">Descripción</Label>
+                                </div>
+                                <div className="w-[70%]">
+                                    <Input onChange={(e)=>setDescription(e)} className="w-full" id="name" placeholder="Name of your project" />
+                                </div>
+                            </div>
+                            <div className="flex justify-center items-center gap-9">
+                                <div className="w-[30%]">
+                                    <Label className="justify-start items-center" htmlFor="category">Categoría</Label>
+                                </div>
+                                <div className="w-[70%]">
+                                    <Select onValueChange={(e)=>setCategory(e)} className="w-full" >
+                                        <SelectTrigger id="framework">
+                                            <SelectValue placeholder="Categoría" />
+                                        </SelectTrigger>
+                                        <SelectContent position="popper">
+                                            <SelectItem value="Trafico">Trafico</SelectItem>
+                                            <SelectItem value="Seguridad">Seguridad</SelectItem>
+                                            <SelectItem value="Clima">Clima</SelectItem>
+                                            <SelectItem value="Salud">Salud</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+                            <div className="flex justify-end items-center space-x-2">
+                                <Switch onCheckedChange={(e)=>setSwitchValidate(e)} id="airplane-mode"/>
+                                <Label htmlFor="airplane-mode">¿Desea una conclusión generada por la IA?</Label>
+                            </div>
+                            <div className="flex justify-center items-center">
+                                <FileUpload setFile={setFile}/>
                             </div>
                         </div>
+                        <CardFooter className="flex justify-end my-4">
+                            <Button>Publicar</Button>
+                        </CardFooter>
                         </form>
                     </CardContent>
-                    <CardFooter className="flex justify-between">
-                        <Button variant="outline">Cancel</Button>
-                        <Button>Deploy</Button>
-                    </CardFooter>
                 </Card>
             </div>
         </>
