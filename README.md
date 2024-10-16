@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# VillavoAlertas
 
-## Getting Started
+<img src="src/assets/logo.png" width="320" alt="VillavoAlerts">
 
-First, run the development server:
+Este proyecto fue desarrollado durante una hackathon para abordar la problemática de seguridad en Villavicencio. La aplicación alerta tanto a la población como a las entidades gubernamentales sobre el estado de la seguridad en la ciudad, proporcionando información en tiempo real y generando alertas relevantes sobre riesgos.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologías Utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Next.js**: Framework principal utilizado para el desarrollo de la aplicación web.
+- **MongoDB**: Base de datos NoSQL para almacenar las alertas y usuarios.
+- **NextAuth**: Sistema de autenticación para gestionar el acceso de usuarios.
+- **OpenAI API**: Utilizada para generar textos y resúmenes automáticos de las alertas.
+- **Cloudinary**: Alojamiento de imágenes para gestionar archivos multimedia.
+- **Shadcn/ui**: Biblioteca de componentes UI para una interfaz moderna y accesible.
+- **PWA (Progressive Web App)**: La aplicación está optimizada para funcionar tanto en dispositivos móviles como en escritorio, ofreciendo una experiencia fluida.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Funcionalidades Clave
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. **Publicación de Alertas**: Los usuarios pueden ver las alertas relacionadas con la seguridad en la ciudad.
+2. **Generación de Textos Automáticos**: A través de la integración con OpenAI, se generan avisos y recomendaciones de las alertas de manera automática.
+3. **Autenticación**: Uso de NextAuth para que los administradores inicien sesión con seguridad.
+4. **Notificaciones en Tiempo Real**: Las entidades y ciudadanos reciben notificaciones instantáneas cuando se publica una nueva alerta.
+5. **Alojamiento de Imágenes**: Las imágenes asociadas a las alertas se almacenan en Cloudinary, asegurando un rendimiento óptimo y una fácil gestión.
+6. **Compatibilidad PWA**: La aplicación puede instalarse en dispositivos móviles y funciona offline para asegurar el acceso a la información crucial en todo momento.
 
-## Learn More
+## Instalación y Configuración
 
-To learn more about Next.js, take a look at the following resources:
+1. Clonar el repositorio:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    ```bash
+    git clone https://github.com/shogunIncognito/hacka-villavo-alerta.git
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. Instalar las dependencias:
 
-## Deploy on Vercel
+    ```bash
+    cd hacka-villavo-alerta
+    npm install
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Configurar variables de entorno:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    Crear un archivo `.env.local` con las siguientes variables:
+
+    ```env
+    NEXTAUTH_SECRET=<key>
+    MONGO_URI=<key>
+    JWT_SECRET=<key>
+    OPENAI_API_KEY=<key>
+    ```
+
+4. Ejecutar la aplicación en modo desarrollo:
+
+    ```bash
+    npm run dev
+    ```
+
+5. La aplicación estará disponible en `http://localhost:3000`.
+
+## Despliegue
+
+El proyecto puede desplegarse fácilmente en plataformas como Vercel, que ofrece soporte nativo para aplicaciones Next.js. Sigue la [documentación de Vercel](https://vercel.com/docs) para realizar el despliegue.
+
+## Colaboradores
+
+- **Juankio**: [GitHub](https://github.com/juankio)
+- **EmersonRoncancio**: [GitHub](https://github.com/EmersonRoncancio)
+- **Yo**: [GitHub](https://github.com/shogunIncognito)
