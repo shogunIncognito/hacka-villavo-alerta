@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import logo from '@/assets/logo.png'
 import Link from 'next/link'
+import { Bell } from 'lucide-react'
+import { Button } from './ui/button'
 
 export default function Navbar() {
 
@@ -10,9 +12,17 @@ export default function Navbar() {
                 <Image src={logo} alt='villavoAlertaslogo' className="object-cover w-48" />
             </Link>
 
-            <Link className='px-4 py-2 rounded-[8px] border border-white flex justify-center items-center' href='/'>
-                <span className='text-white'>SUSCRIBETE</span>
-            </Link>
+            <div className='flex justify-center items-center gap-5'>
+                <Button variant="ghost" size="icon" className="relative group">
+                    <Bell className="h-5 w-5 text-white group-hover:text-black" />
+                    <span className="sr-only">Notificaciones</span>
+                    <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500" />
+                </Button>
+
+                <Button variant="secondary" className="bg-white text-blue-600 hover:bg-blue-100 hover:text-blue-700">
+                    Suscríbete
+                </Button>
+            </div>
         </header>
     )
 }
