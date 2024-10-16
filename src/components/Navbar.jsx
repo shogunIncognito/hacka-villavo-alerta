@@ -54,7 +54,7 @@ export default function Navbar() {
                             Suscríbete
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent className="w-[600px]">
                         <DialogHeader>
                             <DialogTitle className="text-center">Suscríbete</DialogTitle>
                             <DialogDescription>
@@ -75,17 +75,27 @@ export default function Navbar() {
                                 />
                             </div>
                         </div>
-                        <DialogFooter className="grid grid-cols-2 items-center justify-between">
-                            <div className="flex justify-start">
+                        <DialogFooter className="">
+                            <div className='flex flex-col w-full'>
+                                <div className='w-full flex justify-center'>
+                                    <Button onClick={handleSubscribe} className="bg-primary text-center">
+                                        Guardar
+                                    </Button>
+                                </div>
                                 <Link href='https://villavicencio.gov.co/' aria-label="Alcaldia Website" target="_blank">
                                     <Image src={logo} alt='Alcaldia Logo' className="object-cover invert w-48 h-[50px]" />
                                 </Link>
                             </div>
-                            <div className="flex justify-end">
+                            {/* <div className="">
+                                <Link href='https://villavicencio.gov.co/' aria-label="Alcaldia Website" target="_blank">
+                                    <Image src={logo} alt='Alcaldia Logo' className="object-cover invert w-48 h-[50px]" />
+                                </Link>
+                            </div>
+                            <div className="">
                                 <Button onClick={handleSubscribe} className="bg-primary text-center">
                                     Guardar
                                 </Button>
-                            </div>
+                            </div> */}
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
