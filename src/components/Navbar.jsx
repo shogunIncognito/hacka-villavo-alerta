@@ -19,16 +19,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function Navbar() {
-    const [email, setEmail] = useState(''); // Para guardar el email ingresado
+    const [email, setEmail] = useState('');
 
-    // Manejar el cambio de valor del input
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
 
-    // Manejar el envío del formulario
     const handleSubscribe = () => {
-        if (email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email)) {
             console.log('Correo suscrito:', email);
             // Aquí puedes agregar la lógica para enviar el correo a una API o backend
         } else {
@@ -65,7 +64,7 @@ export default function Navbar() {
                                 <Input
                                     id="email"
                                     value={email}
-                                    onChange={handleEmailChange} // Capturar cambios del input
+                                    onChange={handleEmailChange}
                                     className="col-span-3"
                                     placeholder="Ingresa tu correo"
                                 />
