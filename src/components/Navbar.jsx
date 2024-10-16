@@ -1,4 +1,4 @@
-"use client"; // Marca este archivo como un Client Component
+"use client";
 
 import { useState } from 'react';
 import Image from 'next/image';
@@ -42,11 +42,16 @@ export default function Navbar() {
                     <Image src={logo} alt='villavoAlertaslogo' className="object-cover w-48" />
                 </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-5">
+                <Button variant="ghost" size="icon" className="relative group">
+                    <Bell className="h-5 w-5 text-white group-hover:text-black" />
+                    <span className="sr-only">Notificaciones</span>
+                    <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500" />
+                </Button>
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Button variant="outline" className="bg-primary text-white">
-                            <Bell className="mr-2 h-4 w-4" /> Suscríbete
+                        <Button variant="outline" className="bg-white text-primary">
+                            Suscríbete
                         </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
