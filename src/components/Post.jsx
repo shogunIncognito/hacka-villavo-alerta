@@ -102,20 +102,18 @@ export default function Post({ post }) {
                         <div className="flex items-center overflow-hidden">
                             <AvatarComponent />
                             <div className={`text-gray-600 ${isAIResponseExpanded ? 'h-[150px] overflow-y-scroll' : ''}`}>
-                                <CardDescription className="text-gray-600">
-                                    <Markdown className="inline">
-                                        {renderTruncatedText(post.ai_response, isAIResponseExpanded)}
-                                    </Markdown>
-                                    {post.ai_response.length > MAX_LENGTH && (
-                                        <Button
-                                            onClick={toggleAIResponse}
-                                            className="text-blue-500 cursor-pointer p-0"
-                                            variant="link"
-                                        >
-                                            {isAIResponseExpanded ? 'Ver menos' : 'Ver más'}
-                                        </Button>
-                                    )}
-                                </CardDescription>
+                                <Markdown className="inline text-sm">
+                                    {renderTruncatedText(post.ai_response, isAIResponseExpanded)}
+                                </Markdown>
+                                {post.ai_response.length > MAX_LENGTH && (
+                                    <Button
+                                        onClick={toggleAIResponse}
+                                        className="text-blue-500 cursor-pointer p-0"
+                                        variant="link"
+                                    >
+                                        {isAIResponseExpanded ? 'Ver menos' : 'Ver más'}
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </>
