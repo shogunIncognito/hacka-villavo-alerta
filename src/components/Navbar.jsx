@@ -76,26 +76,14 @@ export default function Navbar() {
                             </div>
                         </div>
                         <DialogFooter className="">
-                            <div className='flex flex-col w-full'>
-                                <div className='w-full flex justify-center'>
-                                    <Button onClick={handleSubscribe} className="bg-primary text-center">
-                                        Guardar
-                                    </Button>
-                                </div>
+                            <div className='flex w-full justify-between'>
                                 <Link href='https://villavicencio.gov.co/' aria-label="Alcaldia Website" target="_blank">
                                     <Image src={logo} alt='Alcaldia Logo' className="object-cover invert w-48 h-[50px]" />
                                 </Link>
-                            </div>
-                            {/* <div className="">
-                                <Link href='https://villavicencio.gov.co/' aria-label="Alcaldia Website" target="_blank">
-                                    <Image src={logo} alt='Alcaldia Logo' className="object-cover invert w-48 h-[50px]" />
-                                </Link>
-                            </div>
-                            <div className="">
                                 <Button onClick={handleSubscribe} className="bg-primary text-center">
                                     Guardar
                                 </Button>
-                            </div> */}
+                            </div>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
