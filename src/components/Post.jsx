@@ -31,14 +31,23 @@ export default function Post({ post }) {
 
     const MAX_LENGTH = 100;
 
+    const formatDate = (date) => {
+        const today = new Date().getDate()
+        const postDay = Number(date.split('-')[2].slice(0, 2))
+
+        // TODO: Validar tambien el mes para comprobar que sea el misnmo
+        if (postDay === today) return 'Hoy'
+        if (postDay === today - 1) return 'Ayer'
+
+        return new Date(date).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
+    }
+
     return (
-        <Card className="w-full max-w-[500px] h-full p-6 bg-white shadow-md rounded-lg overflow-hidden mx-auto">
+        <Card className="w-full max-w-[90%] h-full p-6 bg-white shadow-md rounded-lg overflow-hidden mx-auto">
             <CardHeader className="flex items-end p-1">
-                {post.createdAt && (
-                    <CardDescription className="text-gray-500 text-sm">
-                        {new Date(post.createdAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
-                    </CardDescription>
-                )}
+                <CardDescription className="text-gray-500 text-sm">
+                    {formatDate(post.createdAt)}
+                </CardDescription>
             </CardHeader>
             <CardHeader className="p-1">
                 {post.title && (

@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Marca este archivo como un Client Component
 
 import { useState } from 'react';
 import Image from 'next/image';
@@ -19,21 +19,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function Navbar() {
-    const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
+    const [email, setEmail] = useState(''); // Para guardar el email ingresado
 
+    // Manejar el cambio de valor del input
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
-        setError(''); // Clear error message when user starts typing
     };
 
+    // Manejar el envío del formulario
     const handleSubscribe = () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (emailRegex.test(email)) {
+        if (email) {
             console.log('Correo suscrito:', email);
             // Aquí puedes agregar la lógica para enviar el correo a una API o backend
         } else {
-            setError('Por favor, ingresa un correo válido.');
+            console.log('Por favor, ingresa un correo válido.');
         }
     };
 
@@ -66,12 +65,11 @@ export default function Navbar() {
                                 <Input
                                     id="email"
                                     value={email}
-                                    onChange={handleEmailChange}
+                                    onChange={handleEmailChange} // Capturar cambios del input
                                     className="col-span-3"
                                     placeholder="Ingresa tu correo"
                                 />
                             </div>
-                            {error && <p className="text-red-500 text-sm col-span-4">{error}</p>}
                         </div>
                         <DialogFooter className="grid grid-cols-2 items-center justify-between">
                             <div className="flex justify-start">
