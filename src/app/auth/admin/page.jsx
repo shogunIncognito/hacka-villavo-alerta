@@ -19,11 +19,10 @@ import { Label } from "@/components/ui/label"
 import logo from '@/assets/logo.png'
 import loginBackground from '@/assets/login-background.png'
 import Image from 'next/image'
-import { useToast } from '@/hooks/use-toast'
+import { toast } from 'sonner'
 
 export default function Login() {
   const router = useRouter()
-  const { toast } = useToast()
   const handleLogin = async (e) => {
     e.preventDefault()
 
@@ -31,19 +30,10 @@ export default function Login() {
 
     signIn('credentials', { ...values, redirect: false })
       .then((res) => {
-        if (!((res?.ok) ?? false)) return toast({
-          title: 'Error al iniciar sesión.',
-          status: 'error',
-          duration: 3000,
-        })
+        if (!((res?.ok) ?? false)) return toast.error('Credenciales incorrectas.')
 
-        toast({
-          title: 'Inicio de sesión exitoso.',
-          status: 'success',
-          duration: 3000,
-        })
-        // toast.success('Inicio de sesión exitoso.')
-        // router.replace('/')
+        toast.success('Inicio de sesión exitoso.',)
+        router.replace('/')
       })
   }
 
