@@ -17,11 +17,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertError } from './AlertError';
 
 export default function Navbar() {
     const [email, setEmail] = useState('');
-    const [alertError, setAlertError] = useState(false)
+    const [validateform, setValidateform] = useState(false)
     const [description, setDescription] = useState('')
 
     const onSubmit = (e) => {
@@ -29,18 +28,12 @@ export default function Navbar() {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (email.length <= 0) {
-            setAlertError(true)
+            setValidateform(true)
             setDescription('El correo es requerido')
-            setTimeout(() => {
-                setAlertError(false)
-            }, 5000)
             return
         } else if (!emailRegex.test(email)) {
-            setAlertError(true)
-            setDescription('Tienes que ingresar un correo valido')
-            setTimeout(() => {
-                setAlertError(false)
-            }, 5000)
+            setValidateform(true)
+            setDescription('Ingrese un correo valido')
             return
         }
 
@@ -49,9 +42,6 @@ export default function Navbar() {
 
     return (
         <header className="w-full h-[70px] bg-[#2563eb] flex justify-between items-center px-4">
-            {
-                alertError ? <AlertError description={description} /> : null
-            }
             <div className="flex items-center">
                 <Link href='/'>
                     <Image src={logo} alt='villavoAlertaslogo' className="object-cover w-48" />
@@ -82,13 +72,22 @@ export default function Navbar() {
                                     <Label htmlFor="email" className="text-right">
                                         Correo
                                     </Label>
-                                    <Input
-                                        id="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="col-span-3"
-                                        placeholder="Ingresa tu correo"
-                                    />
+                                    <div className='flex flex-col col-span-3'>
+                                        <Input
+                                            id="email"
+                                            value={email}
+                                            onChange={(e) => {
+                                                setEmail(e.target.value)
+                                                setValidateform(false)
+                                            }}
+                                            className="w-full"
+                                            placeholder="Ingresa tu correo"
+                                        />
+                                        {
+                                            validateform ? <span className='text-red-500 text-sm'>{description}</span> : null
+                                        }
+                                    </div>
+
                                 </div>
                             </div>
                             <DialogFooter className="">
