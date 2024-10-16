@@ -19,9 +19,9 @@ export default function Home() {
 
   return (
     // Vista inicial posts
-    <div className="w-full h-full py-11">
+    <div className="w-full h-full p-11">
       <main className="">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {
             getPosts.map(post => {
               return (
