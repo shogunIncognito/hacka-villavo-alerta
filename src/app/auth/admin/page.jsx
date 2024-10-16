@@ -19,10 +19,11 @@ import { Label } from "@/components/ui/label"
 import logo from '@/assets/logo.png'
 import loginBackground from '@/assets/login-background.png'
 import Image from 'next/image'
+import { useToast } from '@/hooks/use-toast'
 
 export default function Login() {
   const router = useRouter()
-
+  const { toast } = useToast()
   const handleLogin = async (e) => {
     e.preventDefault()
 
@@ -30,9 +31,19 @@ export default function Login() {
 
     signIn('credentials', { ...values, redirect: false })
       .then((res) => {
-        if (!((res?.ok) ?? false)) return console.log('Error al iniciar sesión')
+        if (!((res?.ok) ?? false)) return toast({
+          title: 'Error al iniciar sesión.',
+          status: 'error',
+          duration: 3000,
+        })
+
+        toast({
+          title: 'Inicio de sesión exitoso.',
+          status: 'success',
+          duration: 3000,
+        })
         // toast.success('Inicio de sesión exitoso.')
-        router.replace('/')
+        // router.replace('/')
       })
   }
 
@@ -49,11 +60,11 @@ export default function Login() {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label className='font-bold' htmlFor="email">Correo</Label>
-                <Input id="email" placeholder="example@gmail.com" />
+                <Input id="email" name="email" placeholder="example@gmail.com" />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label className='font-bold' htmlFor="password">Contraseña</Label>
-                <Input id="password" type="password" placeholder="******" />
+                <Input id="password" name="password" type="password" placeholder="******" />
               </div>
             </div>
           </CardContent>

@@ -12,12 +12,12 @@ const handler = NextAuth({
         email: { label: 'Email', type: 'text', placeholder: 'test@test.com' },
         password: { label: 'Password', type: 'password', placeholder: '*********' }
       },
-      async authorize (credentials) {
+      async authorize(credentials) {
         try {
           await dbConnect()
-          
+
           const existAdmin = await Admin.findOne({ email: credentials?.email }).select('+password')
-          
+
           if (existAdmin === null) throw new Error('User not found')
           const isValidPassword = await bcrypt.compare(credentials.password, existAdmin.password)
           if (!isValidPassword) throw new Error('Invalid password')
@@ -27,7 +27,7 @@ const handler = NextAuth({
             email: existAdmin.email,
             superAdmin: existAdmin.role,
             _id: existAdmin._id
-          } 
+          }
         } catch (error) {
           console.log({ error })
           throw new Error('Error authenticating')
@@ -36,10 +36,10 @@ const handler = NextAuth({
     })
   ],
   callbacks: {
-    async jwt ({ token, user }) {      
+    async jwt({ token, user }) {
       return { ...token, ...user }
     },
-    async session ({ session, token }) {
+    async session({ session, token }) {
       try {
         session.user = token
         return session
