@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import logo from '@/assets/logo.png'
 import Link from 'next/link'
-import { Bell } from 'lucide-react'
-import { Button } from './ui/button'
+import { Button } from "@/components/ui/button"
+import { Bell } from "lucide-react"
 
 export default function Navbar() {
 
