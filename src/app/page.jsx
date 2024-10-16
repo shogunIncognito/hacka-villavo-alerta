@@ -30,9 +30,9 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {
             loanding ?
-              SkeletonPosts.map(skeleton => {
+              SkeletonPosts.map((skeleton, index) => {
                 return (
-                  <SkeletonCard />
+                  <SkeletonCard key={index} />
                 )
               })
               :
