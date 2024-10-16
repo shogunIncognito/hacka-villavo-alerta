@@ -21,8 +21,12 @@ export async function AIConclusions(post) {
     })
 
     return requestToOpenAI.data.choices[0].message.content
-} 
+}
 
 export async function unsuscribeEmails(token) {
-    await axios.delete(`/api/unsuscribe/${token}`)  
+    await axios.delete(`/api/unsuscribe/${token}`)
+}
+
+export async function subscribeEmail(email) {
+    await axios.post('/api/subscribeEmail', { email })
 }

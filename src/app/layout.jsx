@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import SessionAuthProvider from "@/context/SessionProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,10 +30,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Navbar />
-        {children}
-        <Footer />
-        <Toaster position="top-center" richColors />
+        <SessionAuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+          <Toaster position="top-center" richColors />
+        </SessionAuthProvider>
       </body>
     </html>
   );
