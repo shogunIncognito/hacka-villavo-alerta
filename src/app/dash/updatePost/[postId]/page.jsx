@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -21,14 +20,15 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import FileUpload from "@/components/InputFIle";
-import { useState } from "react";
-import { axiosPost } from "@/helpers/requests/post";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { axiosPut } from '@/helpers/requests/put';
+import { axiosGet } from '@/helpers/requests/get';
+import { useRouter } from 'next/navigation';
 
 export default function UpdatePost({ params }) {
-    console.log(params.postId)
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
@@ -37,14 +37,27 @@ export default function UpdatePost({ params }) {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [imageUrl, setImageUrl] = useState(null)
+    const navigate = useRouter();
     const { data: session } = useSession();
+
+    useEffect(() => {
+        axiosGet({ url: `/api/posts/${params.postId}` })
+            .then(res => {
+                setTitle(res.title)
+                setDescription(res.description)
+                setCategory(res.category)
+                console.log()
+                setImageUrl(res.image[0])
+                console.log(res)
+            })
+    }, [])
+
 
     const validate = () => {
         const newErrors = {};
         if (!title) newErrors.title = "El título es requerido";
         if (!description) newErrors.description = "La descripción es requerida";
         if (!category) newErrors.category = "La categoría es requerida";
-        if (!file) newErrors.file = "El archivo es requerido";
         return newErrors;
     };
     const uploadImageToCloudinary = async (file) => {
@@ -53,22 +66,22 @@ export default function UpdatePost({ params }) {
         formData.append("file", file.file);
         formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
 
-        // try {
-        //     const res = await axios.post(
-        //         "https://api.cloudinary.com/v1_1/" + process.env.NEXT_PUBLIC_CLOUD_NAME + "/image/upload",
-        //         formData,
-        //         {
-        //             headers: {
-        //                 "Content-Type": "multipart/form-data",
-        //             },
-        //         }
-        //     );
-        //     return res.data.secure_url;
-        // } catch (error) {
-        //     console.error("Error al subir la imagen a Cloudinary", error);
-        //     toast.error("Error al subir la imagen a Cloudinary. Verifique las configuraciones.");
-        //     throw error;
-        // }
+        try {
+            const res = await axios.post(
+                "https://api.cloudinary.com/v1_1/" + process.env.NEXT_PUBLIC_CLOUD_NAME + "/image/upload",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            return res.data.secure_url;
+        } catch (error) {
+            console.error("Error al subir la imagen a Cloudinary", error);
+            toast.error("Error al subir la imagen a Cloudinary. Verifique las configuraciones.");
+            throw error;
+        }
     };
 
     const author = session?.user?.username || "Anónimo";
@@ -85,22 +98,34 @@ export default function UpdatePost({ params }) {
 
         setIsSubmitting(true);
 
+
         try {
-            const imageUrl = await uploadImageToCloudinary(file);
+            let image;
+            if (!file) {
+                image = imageUrl;
+                console.log(image)
+            } else {
+                image = await uploadImageToCloudinary(file);
+                console.log(image)
+                setImageUrl(await uploadImageToCloudinary(file))
+            }
 
-            // await axiosPost({
-            //     url: "/api/posts",
-            //     data: {
-            //         title: title,
-            //         description: description,
-            //         category: category,
-            //         generateAIResponse: switchValidate,
-            //         image: imageUrl,
-            //         author: author,
-            //     },
-            // });
 
-            toast.success("Post creado exitosamente");
+
+            console.log('hola')
+            await axiosPut({
+                url: `/api/posts/${params.postId}`,
+                data: {
+                    title: title,
+                    description: description,
+                    category: category,
+                    generateAIResponse: switchValidate,
+                    image: image,
+                    author: author,
+                },
+            });
+
+            toast.success("Post actualizado correctamente");
             setErrors({});
             setTitle("");
             setDescription("");
@@ -108,8 +133,9 @@ export default function UpdatePost({ params }) {
             setImageUrl(null)
             setSwitchValidate(false);
             setFile(null);
+            navigate.push('/')
         } catch (error) {
-            toast.error("Error al crear el post");
+            toast.error("Error al actualizar el post");
         } finally {
             setIsSubmitting(false);
         }
@@ -120,7 +146,7 @@ export default function UpdatePost({ params }) {
             <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh]">
                 <Card className="w-[650px] 2xl:w-[850px] 2xl:">
                     <CardHeader>
-                        <CardTitle>Actualizar Post</CardTitle>
+                        <CardTitle>Editar Post</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={onSubmit}>
@@ -220,7 +246,7 @@ export default function UpdatePost({ params }) {
                                     {
                                         isSubmitting ?
                                             <Spinner /> :
-                                            <span>Publicar</span>
+                                            <span>Guardar</span>
                                     }
                                 </Button>
                             </CardFooter>
