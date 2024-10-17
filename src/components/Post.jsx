@@ -12,29 +12,61 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import Markdown from 'react-markdown';
+import { Calendar, Edit, EllipsisVertical, Loader2, Trash } from 'lucide-react';
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Link from 'next/link';
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { deletePost } from '@/services/api';
+import { toast } from 'sonner';
+import { useSession } from 'next-auth/react';
+
 
 const MAX_LENGTH = 100;
 
-export default function Post({ post }) {
+export default function Post({ post, deletePostFromState }) {
+    const { data } = useSession();
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [isAIResponseExpanded, setIsAIResponseExpanded] = useState(false);
 
     const toggleDescription = () => setIsDescriptionExpanded(prev => !prev);
     const toggleAIResponse = () => setIsAIResponseExpanded(prev => !prev);
 
+    const [loadingDelete, setLoadingDelete] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+
     const formatDate = useMemo(() => {
         const today = new Date().getDate();
         const postDay = Number(post.createdAt.split('-')[2].slice(0, 2));
+
+        const logDate = new Date(post.createdAt).toLocaleDateString('es-ES', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        });
 
         // TODO: Validar también el mes para comprobar que sea el mismo
         if (postDay === today) return 'Hoy';
         if (postDay === today - 1) return 'Ayer';
 
-        return new Date(post.createdAt).toLocaleDateString('es-ES', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        });
+        return logDate
     }, [post.createdAt]);
 
     const renderTruncatedText = (text, isExpanded) =>
@@ -47,10 +79,26 @@ export default function Post({ post }) {
         </Avatar>
     );
 
+    const handleDeletePost = (postId) => {
+        setLoadingDelete(true);
+        deletePost(postId)
+            .then(() => {
+                toast.success('Publicación eliminada con éxito');
+                setOpenDialog(false);
+                deletePostFromState(postId);
+            })
+            .catch(() => toast.error('Ocurrió un error al eliminar la publicación'))
+            .finally(() => setLoadingDelete(false));
+    }
+
     return (
-        <Card className="w-full max-w-[90%]  p-3 bg-white shadow-md rounded-lg mx-auto relative overflow-hidden">
-            <CardHeader className="flex items-end p-0 mt-4 pr-5">
-                <CardDescription className="text-gray-500 text-sm">{formatDate}</CardDescription>
+        <Card className="w-full max-w-[95%] p-3 bg-white shadow-md rounded-lg mx-auto relative overflow-hidden">
+            <CardHeader className="flex flex-row justify-between items-center p-0 mt-4 pr-5">
+                {post.category && <Badge variant="secondary">{post.category}</Badge>}
+                <CardDescription className="text-gray-500 text-sm m-0">
+                    <Calendar className="inline mr-1" size={16} />
+                    {formatDate}
+                </CardDescription>
             </CardHeader>
 
             <CardHeader className="p-1">
@@ -121,8 +169,8 @@ export default function Post({ post }) {
             </CardContent>
 
             {post.image && post.image.length > 0 && (
-                <CardContent className="p-0">
-                    <div className="w-full h-[250px] overflow-hidden rounded-lg">
+                <CardContent className="p-1">
+                    <div className="w-full h-[450px] overflow-hidden rounded-lg">
                         <img
                             src={post.image[0]}
                             className="object-cover w-full h-full"
@@ -133,9 +181,65 @@ export default function Post({ post }) {
             )}
 
             <CardFooter className="p-4 flex justify-between items-center">
-                {post.category && <Badge variant="secondary">{post.category}</Badge>}
-                {post.author && <CardDescription className="text-gray-500">{post.author}</CardDescription>}
+                {post.author && (
+                    <CardDescription className="text-gray-500 flex items-center gap-2">
+                        <Avatar>
+                            <AvatarFallback>{post.author[0]}</AvatarFallback>
+                        </Avatar>
+                        <b>{post.author}</b>
+                    </CardDescription>
+                )}
+
+                {data && (
+                    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline">
+                                    <EllipsisVertical className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56">
+                                <DropdownMenuLabel>Gestionar publicación</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <Link href={`/post/${post._id}`}>
+                                        <DropdownMenuItem className="cursor-pointer">
+                                            <Edit className="mr-2 h-4 w-4" />
+                                            <span>Editar</span>
+                                        </DropdownMenuItem>
+                                    </Link>
+                                    <DialogTrigger className='w-full'>
+                                        <DropdownMenuItem className="cursor-pointer">
+                                            <Trash className="mr-2 h-4 w-4" />
+                                            <span>Eliminar</span>
+                                        </DropdownMenuItem>
+                                    </DialogTrigger>
+                                </DropdownMenuGroup>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>¿Quieres eliminar la publicación?</DialogTitle>
+                                <DialogDescription>
+                                    Esta acción no se puede deshacer y perderás toda la información de la publicación.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                                <Button
+                                    onClick={() => handleDeletePost(post._id)}
+                                    disabled={loadingDelete}
+                                    variant="destructive"
+                                    className="w-1/5"
+                                >
+                                    {loadingDelete ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Eliminar'}
+                                </Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                )}
+
             </CardFooter>
-        </Card>
+        </Card >
     );
 }

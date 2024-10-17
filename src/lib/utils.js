@@ -52,7 +52,7 @@ export async function sendNewPostEmails({ emails, post }) {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 15px; border: 1px solid #e0e0e0; border-radius: 10px; margin-top: 20px; background-color: #fafafa;">
       <div style="text-align: center;">
         <p style="font-size: 14px; color: #333;">¿No quieres recibir más notificaciones?</p>
-        <a href="https://hacka-villavo-alerta.vercel.app/unsubscribe/${recipient.unsuscribeToken}" style="color: #007BFF; text-decoration: none; padding: 10px 15px; border: 1px solid #007BFF; border-radius: 5px; display: inline-block;">Desuscribirse</a>
+        <a href="https://hacka-villavo-alerta.vercel.app/unsubscribe/${recipient.unsuscribeToken}" style="color: #007BFF; text-decoration: none; padding: 10px 15px; border: 1px solid #007BFF; border-radius: 5px; display: inline-block;">Cancelar suscripción</a>
       </div>
     </div>
   `

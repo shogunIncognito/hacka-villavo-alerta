@@ -24,9 +24,13 @@ export async function AIConclusions(post) {
 }
 
 export async function unsuscribeEmails(token) {
-    await axios.delete(`/api/unsuscribe/${token}`)
+    return await axios.delete(`/api/unsuscribe/${token}`)
 }
 
 export async function subscribeEmail(email) {
-    await axios.post('/api/subscribeEmail', { email })
+    return await axios.post('/api/subscribeEmail', { email })
+}
+
+export async function deletePost(id) {
+    return await axios.delete(`/api/posts/${id}`)
 }

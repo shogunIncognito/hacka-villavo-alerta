@@ -32,11 +32,18 @@ export default function Home() {
       })
   }, [page])
 
+  const deletePostFromState = (id) => {
+    setPosts({
+      posts: posts.posts.filter(post => post._id !== id),
+      lastPage: posts.lastPage
+    })
+  }
+
   return (
     // Vista inicial posts
     <div className="w-full h-full p-11">
       <main>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {
             loading ?
               SkeletonPosts.map((skeleton, index) => {
@@ -47,7 +54,7 @@ export default function Home() {
               :
               posts.posts.map(post => {
                 return (
-                  <Post post={post} key={post._id} />
+                  <Post post={post} key={post._id} deletePostFromState={deletePostFromState} />
                 )
               })
           }
