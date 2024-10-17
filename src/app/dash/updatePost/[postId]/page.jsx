@@ -27,7 +27,8 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-export default function AddPost() {
+export default function UpdatePost({ params }) {
+    console.log(params.postId)
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
@@ -52,22 +53,22 @@ export default function AddPost() {
         formData.append("file", file.file);
         formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
 
-        try {
-            const res = await axios.post(
-                "https://api.cloudinary.com/v1_1/" + process.env.NEXT_PUBLIC_CLOUD_NAME + "/image/upload",
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-            return res.data.secure_url;
-        } catch (error) {
-            console.error("Error al subir la imagen a Cloudinary", error);
-            toast.error("Error al subir la imagen a Cloudinary. Verifique las configuraciones.");
-            throw error;
-        }
+        // try {
+        //     const res = await axios.post(
+        //         "https://api.cloudinary.com/v1_1/" + process.env.NEXT_PUBLIC_CLOUD_NAME + "/image/upload",
+        //         formData,
+        //         {
+        //             headers: {
+        //                 "Content-Type": "multipart/form-data",
+        //             },
+        //         }
+        //     );
+        //     return res.data.secure_url;
+        // } catch (error) {
+        //     console.error("Error al subir la imagen a Cloudinary", error);
+        //     toast.error("Error al subir la imagen a Cloudinary. Verifique las configuraciones.");
+        //     throw error;
+        // }
     };
 
     const author = session?.user?.username || "Anónimo";
@@ -87,17 +88,17 @@ export default function AddPost() {
         try {
             const imageUrl = await uploadImageToCloudinary(file);
 
-            await axiosPost({
-                url: "/api/posts",
-                data: {
-                    title: title,
-                    description: description,
-                    category: category,
-                    generateAIResponse: switchValidate,
-                    image: imageUrl,
-                    author: author,
-                },
-            });
+            // await axiosPost({
+            //     url: "/api/posts",
+            //     data: {
+            //         title: title,
+            //         description: description,
+            //         category: category,
+            //         generateAIResponse: switchValidate,
+            //         image: imageUrl,
+            //         author: author,
+            //     },
+            // });
 
             toast.success("Post creado exitosamente");
             setErrors({});
@@ -119,8 +120,7 @@ export default function AddPost() {
             <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh]">
                 <Card className="w-[650px] 2xl:w-[850px] 2xl:">
                     <CardHeader>
-                        <CardTitle>Crear Nueva Alerta</CardTitle>
-                        <CardDescription>Deploy your new project in one-click.</CardDescription>
+                        <CardTitle>Actualizar Post</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={onSubmit}>
