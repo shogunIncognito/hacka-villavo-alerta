@@ -1,5 +1,6 @@
 "use client";
 
+import Spinner from '@/components/Spinner'
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -215,8 +216,12 @@ export default function AddPost() {
                                 )}
                             </div>
                             <CardFooter className="flex justify-end my-4">
-                                <Button type="submit" disabled={isSubmitting}>
-                                    Publicar
+                                <Button className="flex w-32 justify-center items-center" type="submit" disabled={isSubmitting}>
+                                    {
+                                        isSubmitting ?
+                                            <Spinner /> :
+                                            <span>Publicar</span>
+                                    }
                                 </Button>
                             </CardFooter>
                         </form>
