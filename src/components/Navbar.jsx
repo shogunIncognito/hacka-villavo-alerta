@@ -33,12 +33,12 @@ export default function Navbar() {
                 {data ? (
                     <>
                         <Link href='/dash/addPost'>
-                            <Button className="bg-green-500 hover:bg-green-600">
+                            <Button className="bg-green-500 font-medium hover:bg-green-600">
                                 <Plus className="mr-2 h-4 w-4" /> Publicar
                             </Button>
                         </Link>
-                        <Button onClick={handleLogout} className="bg-red-500 hover:bg-red-600">
-                            <LogOut className="mr-2 h-4 w-4" /> Cerrar sesión
+                        <Button onClick={handleLogout} className="bg-white text-red-500 font-medium hover:bg-gray-200">
+                            <LogOut className="mr-2 h-4 w-4 " /> Cerrar sesión
                         </Button>
                     </>
                 ) : (

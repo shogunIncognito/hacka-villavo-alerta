@@ -1,6 +1,6 @@
 "use client";
 
-import Spinner from '@/components/Spinner'
+import Spinner from '@/components/Spinner';
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -22,9 +22,9 @@ import {
 import { Switch } from "@/components/ui/switch";
 import FileUpload from "@/components/InputFIle";
 import { useState } from "react";
-import { axiosPost } from "@/helpers/requests/post";
 import { toast } from "sonner";
 import axios from "axios";
+import { axiosPost } from "@/helpers/requests/post";
 import { useSession } from "next-auth/react";
 
 export default function AddPost() {
@@ -35,7 +35,7 @@ export default function AddPost() {
     const [file, setFile] = useState(null);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [imageUrl, setImageUrl] = useState(null)
+    const [imageUrl, setImageUrl] = useState(null);
     const { data: session } = useSession();
 
     const validate = () => {
@@ -46,15 +46,15 @@ export default function AddPost() {
         if (!file) newErrors.file = "El archivo es requerido";
         return newErrors;
     };
+
     const uploadImageToCloudinary = async (file) => {
-        console.log("Subiendo imagen a Cloudinary...", file.file);
         const formData = new FormData();
         formData.append("file", file.file);
         formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
 
         try {
             const res = await axios.post(
-                "https://api.cloudinary.com/v1_1/" + process.env.NEXT_PUBLIC_CLOUD_NAME + "/image/upload",
+                `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
                 formData,
                 {
                     headers: {
@@ -64,7 +64,6 @@ export default function AddPost() {
             );
             return res.data.secure_url;
         } catch (error) {
-            console.error("Error al subir la imagen a Cloudinary", error);
             toast.error("Error al subir la imagen a Cloudinary. Verifique las configuraciones.");
             throw error;
         }
@@ -78,7 +77,6 @@ export default function AddPost() {
         const newErrors = validate();
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-            Object.values(newErrors).forEach((error) => console.log(error));
             return;
         }
 
@@ -104,7 +102,7 @@ export default function AddPost() {
             setTitle("");
             setDescription("");
             setCategory("");
-            setImageUrl(null)
+            setImageUrl(null);
             setSwitchValidate(false);
             setFile(null);
         } catch (error) {
@@ -115,9 +113,14 @@ export default function AddPost() {
     };
 
     return (
-        <>
-            <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh]">
-                <Card className="w-[650px] 2xl:w-[850px] 2xl:">
+        <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh] relative">
+            <Card className="w-[650px] 2xl:w-[850px] relative rounded-lg">
+                {isSubmitting && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10 rounded-lg">
+                        <Spinner className="h-auto w-auto" />
+                    </div>
+                )}
+                <div className={`${isSubmitting ? 'opacity-50 pointer-events-none' : ''}`}>
                     <CardHeader>
                         <CardTitle>Crear Nueva Alerta</CardTitle>
                         <CardDescription>Deploy your new project in one-click.</CardDescription>
@@ -127,9 +130,7 @@ export default function AddPost() {
                             <div className="grid w-full items-center gap-4">
                                 <div className="flex justify-center items-center gap-9">
                                     <div className="w-[30%]">
-                                        <Label className="justify-start items-center" htmlFor="title">
-                                            Título
-                                        </Label>
+                                        <Label htmlFor="title">Título</Label>
                                     </div>
                                     <div className="w-[70%]">
                                         <Input
@@ -138,6 +139,7 @@ export default function AddPost() {
                                             className="w-full focus:border-bd-primary"
                                             id="title"
                                             placeholder="Ingrese el título"
+                                            disabled={isSubmitting}
                                         />
                                         {errors.title && (
                                             <p className="text-red-500 text-sm">{errors.title}</p>
@@ -146,12 +148,7 @@ export default function AddPost() {
                                 </div>
                                 <div className="flex justify-center items-center gap-9">
                                     <div className="w-[30%]">
-                                        <Label
-                                            className="justify-start items-center"
-                                            htmlFor="description"
-                                        >
-                                            Descripción
-                                        </Label>
+                                        <Label htmlFor="description">Descripción</Label>
                                     </div>
                                     <div className="w-[70%]">
                                         <Input
@@ -160,6 +157,7 @@ export default function AddPost() {
                                             className="w-full focus:border-bd-primary"
                                             id="description"
                                             placeholder="Ingrese la descripción"
+                                            disabled={isSubmitting}
                                         />
                                         {errors.description && (
                                             <p className="text-red-500 text-sm">{errors.description}</p>
@@ -168,18 +166,14 @@ export default function AddPost() {
                                 </div>
                                 <div className="flex justify-center items-center gap-9">
                                     <div className="w-[30%]">
-                                        <Label
-                                            className="justify-start items-center"
-                                            htmlFor="category"
-                                        >
-                                            Categoría
-                                        </Label>
+                                        <Label htmlFor="category">Categoría</Label>
                                     </div>
                                     <div className="w-[70%]">
                                         <Select
                                             onValueChange={(value) => setCategory(value)}
                                             value={category}
                                             className="w-full focus:border-bd-primary"
+                                            disabled={isSubmitting}
                                         >
                                             <SelectTrigger id="category">
                                                 <SelectValue placeholder="Categoría" />
@@ -201,13 +195,14 @@ export default function AddPost() {
                                         onCheckedChange={(checked) => setSwitchValidate(checked)}
                                         checked={switchValidate}
                                         id="airplane-mode"
+                                        disabled={isSubmitting}
                                     />
                                     <Label htmlFor="airplane-mode">
                                         ¿Desea una conclusión generada por la IA?
                                     </Label>
                                 </div>
                                 <div className="flex justify-center items-center">
-                                    <FileUpload setFile={setFile} setUrl={setImageUrl} url={imageUrl} />
+                                    <FileUpload setFile={setFile} setUrl={setImageUrl} url={imageUrl} disabled={isSubmitting} />
                                 </div>
                                 {errors.file && (
                                     <p className="text-red-500 text-sm text-center">
@@ -217,17 +212,13 @@ export default function AddPost() {
                             </div>
                             <CardFooter className="flex justify-end my-4">
                                 <Button className="flex w-32 justify-center items-center" type="submit" disabled={isSubmitting}>
-                                    {
-                                        isSubmitting ?
-                                            <Spinner /> :
-                                            <span>Publicar</span>
-                                    }
+                                    <span>Publicar</span>
                                 </Button>
                             </CardFooter>
                         </form>
                     </CardContent>
-                </Card>
-            </div>
-        </>
+                </div>
+            </Card>
+        </div>
     );
 }
