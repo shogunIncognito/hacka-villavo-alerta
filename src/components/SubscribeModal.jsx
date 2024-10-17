@@ -40,11 +40,15 @@ export default function SubscribeModal() {
         }
 
         setEmail('')
-        toast.success('Suscripción exitosa')
 
-        subscribeEmail(email)
-
-        setOpen(false)
+        toast.promise(subscribeEmail(email), {
+            loading: 'Registrando...',
+            success: () => {
+                setOpen(false)
+                return `Suscripción exitosa`;
+            },
+            error: 'Este correo ya esta registrado',
+        });
     }
 
     return (
