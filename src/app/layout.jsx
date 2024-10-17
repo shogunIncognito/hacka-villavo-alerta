@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Ola from "@/components/ola";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import SessionAuthProvider from "@/context/SessionProvider";
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       >
         <SessionAuthProvider>
           <Navbar />
+          <Ola />
           {children}
           <Footer />
           <Toaster position="top-center" richColors />

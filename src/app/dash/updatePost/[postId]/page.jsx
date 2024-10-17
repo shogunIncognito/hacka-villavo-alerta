@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -21,13 +20,15 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import FileUpload from "@/components/InputFIle";
-import { useState } from "react";
-import { axiosPost } from "@/helpers/requests/post";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { axiosPut } from '@/helpers/requests/put';
+import { axiosGet } from '@/helpers/requests/get';
+import { useRouter } from 'next/navigation';
 
-export default function AddPost() {
+export default function UpdatePost({ params }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
@@ -36,14 +37,25 @@ export default function AddPost() {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [imageUrl, setImageUrl] = useState(null)
+    const navigate = useRouter();
     const { data: session } = useSession();
+
+    useEffect(() => {
+        axiosGet({ url: `/api/posts/${params.postId}` })
+            .then(res => {
+                setTitle(res.title)
+                setDescription(res.description)
+                setCategory(res.category)
+                setImageUrl(res.image[0])
+            })
+    }, [])
+
 
     const validate = () => {
         const newErrors = {};
         if (!title) newErrors.title = "El título es requerido";
         if (!description) newErrors.description = "La descripción es requerida";
         if (!category) newErrors.category = "La categoría es requerida";
-        if (!file) newErrors.file = "El archivo es requerido";
         return newErrors;
     };
     const uploadImageToCloudinary = async (file) => {
@@ -84,22 +96,32 @@ export default function AddPost() {
 
         setIsSubmitting(true);
 
-        try {
-            const imageUrl = await uploadImageToCloudinary(file);
 
-            await axiosPost({
-                url: "/api/posts",
+        try {
+            let image;
+            if (!file) {
+                image = imageUrl;
+                console.log(image)
+            } else {
+                image = await uploadImageToCloudinary(file);
+                setImageUrl(await uploadImageToCloudinary(file))
+            }
+
+
+
+            await axiosPut({
+                url: `/api/posts/${params.postId}`,
                 data: {
                     title: title,
                     description: description,
                     category: category,
                     generateAIResponse: switchValidate,
-                    image: imageUrl,
+                    image: image,
                     author: author,
                 },
             });
 
-            toast.success("Post creado exitosamente");
+            toast.success("Post actualizado correctamente");
             setErrors({});
             setTitle("");
             setDescription("");
@@ -107,8 +129,9 @@ export default function AddPost() {
             setImageUrl(null)
             setSwitchValidate(false);
             setFile(null);
+            navigate.push('/')
         } catch (error) {
-            toast.error("Error al crear el post");
+            toast.error("Error al actualizar el post");
         } finally {
             setIsSubmitting(false);
         }
@@ -119,8 +142,7 @@ export default function AddPost() {
             <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh]">
                 <Card className="w-[650px] 2xl:w-[850px] 2xl:">
                     <CardHeader>
-                        <CardTitle>Crear Nueva Alerta</CardTitle>
-                        <CardDescription>Deploy your new project in one-click.</CardDescription>
+                        <CardTitle>Editar Post</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={onSubmit}>
@@ -220,7 +242,7 @@ export default function AddPost() {
                                     {
                                         isSubmitting ?
                                             <Spinner /> :
-                                            <span>Publicar</span>
+                                            <span>Guardar</span>
                                     }
                                 </Button>
                             </CardFooter>
