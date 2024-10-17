@@ -46,9 +46,7 @@ export default function UpdatePost({ params }) {
                 setTitle(res.title)
                 setDescription(res.description)
                 setCategory(res.category)
-                console.log()
                 setImageUrl(res.image[0])
-                console.log(res)
             })
     }, [])
 
@@ -106,13 +104,11 @@ export default function UpdatePost({ params }) {
                 console.log(image)
             } else {
                 image = await uploadImageToCloudinary(file);
-                console.log(image)
                 setImageUrl(await uploadImageToCloudinary(file))
             }
 
 
 
-            console.log('hola')
             await axiosPut({
                 url: `/api/posts/${params.postId}`,
                 data: {

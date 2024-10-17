@@ -20,7 +20,6 @@ export default function Home() {
   useEffect(() => {
     axiosGet({ url: `/api/posts?page=${page}` })
       .then(res => {
-        console.log(res)
         setPosts({
           posts: [...posts.posts, ...res.posts],
           lastPage: res.lastPage
