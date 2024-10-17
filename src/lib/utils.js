@@ -8,19 +8,23 @@ export function cn(...inputs) {
 // correo
 
 import sgMail from '@sendgrid/mail';
+import { marked } from 'marked'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export async function sendNewPostEmails({ emails, post }) {
+
   const pendRequests = emails.map((recipient) => {
+    const aiResponseHTML = post.ai_response ? marked(post.ai_response) : '';
+
     const msg = {
       to: recipient.email,
       from: 'VillavoAlertas<jcmfotosyvideos2012@gmail.com>',
       subject: post.title,
       html: `
-    <div style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
+    <div style="font-family: Arial, sans-serif; max-width: 850px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
       <div style="text-align: center; padding-bottom: 20px;">
-        <img src="https://res.cloudinary.com/ddxmom2c3/image/upload/f_auto,q_auto/qfxnpgpto5ytir0xsrkg" alt="VillavoAlertas" style="width: 120px; margin-bottom: 20px;" />
+        <img src="https://res.cloudinary.com/ddxmom2c3/image/upload/f_auto,q_auto/qfxnpgpto5ytir0xsrkg" alt="VillavoAlertas" style="width: 200px; height: 150px; object-fit: cover; margin-bottom: 20px;" />
         <h1 style="font-size: 24px; color: #333;">Nueva Noticia en Villavicencio</h1>
       </div>
       <div style="background-color: #f7f7f7; padding: 20px; border-radius: 8px;">
@@ -34,8 +38,10 @@ export async function sendNewPostEmails({ emails, post }) {
         
         ${post.ai_response ? `
         <div style="margin-top: 20px; padding: 15px; background-color: #e0f7fa; border-radius: 8px;">
-          <h3 style="font-size: 18px; color: #007BFF;">Conclusión de la IA:</h3>
-          <p style="font-size: 16px; color: #333; line-height: 1.6;">${post.ai_response}</p>
+          <h3 style="font-size: 18px; color: #007BFF;">Conclusión de Centauri IA:</h3>
+          <div style="font-size: 16px; color: #333; line-height: 1.6;">
+            ${aiResponseHTML}
+          </div>
         </div>` : ''}
       </div>
       <div style="text-align: center; padding-top: 20px; border-top: 1px solid #e0e0e0;">
