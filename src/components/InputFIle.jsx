@@ -3,9 +3,8 @@
 import { useState, useRef } from 'react'
 import { Upload } from 'lucide-react'
 
-export default function FileUpload({ setFile }) {
+export default function FileUpload({ setFile, url, setUrl }) {
   const [isDragging, setIsDragging] = useState(false)
-  const [preview, setPreview] = useState(null)
   const fileInputRef = useRef(null)
 
   const handleDragEnter = (e) => {
@@ -42,7 +41,7 @@ export default function FileUpload({ setFile }) {
       const file = e.target.files[0]
       const url = URL.createObjectURL(file)
       setFile({ file, url })
-      setPreview(url)
+      setUrl(url)
     }
   }
 
@@ -65,11 +64,11 @@ export default function FileUpload({ setFile }) {
         ref={fileInputRef}
         onChange={handleFileInput}
       />
-      {preview && (
+      {url && (
         <img
-          src={preview}
+          src={url}
           alt="Vista previa"
-          className="mt-4 mx-auto h-24 w-24 object-cover"
+          className="mt-4 mx-auto h-24 w-24 object-cover rounded-xl"
         />
       )}
     </div>
