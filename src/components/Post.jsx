@@ -202,7 +202,7 @@ export default function Post({ post, deletePostFromState }) {
                                 <DropdownMenuLabel>Gestionar publicación</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
-                                    <Link href={`/post/${post._id}`}>
+                                    <Link href={`/dash/updatePost/${post._id}`}>
                                         <DropdownMenuItem className="cursor-pointer">
                                             <Edit className="mr-2 h-4 w-4" />
                                             <span>Editar</span>
