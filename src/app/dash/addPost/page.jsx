@@ -85,17 +85,17 @@ export default function AddPost() {
         try {
             const imageUrl = await uploadImageToCloudinary(file);
 
-            // await axiosPost({
-            //     url: "/api/posts",
-            //     data: {
-            //         title: title,
-            //         description: description,
-            //         category: category,
-            //         generateAIResponse: switchValidate,
-            //         image: imageUrl,
-            //         author: author,
-            //     },
-            // });
+            await axiosPost({
+                url: "/api/posts",
+                data: {
+                    title: title,
+                    description: description,
+                    category: category,
+                    generateAIResponse: switchValidate,
+                    image: imageUrl,
+                    author: author,
+                },
+            });
 
             toast.success("Post creado exitosamente");
             setErrors({});
