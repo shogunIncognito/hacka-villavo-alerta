@@ -10,17 +10,25 @@ export async function GET(req) {
         await dbConnect()
 
         const { searchParams } = new URL(req.url)
+
         const page = searchParams.get('page')
+        const search = searchParams.get('search')
+        const category = searchParams.get('category')
+
+        const filter = {
+            title: { $regex: search || '', $options: 'i' },
+            category: { $regex: category || '', $options: 'i' }
+        }
 
         const currentPage = Number(page) || 1;
         const limit = 8;
 
-        const postPagination = await Post.find({})
+        const postPagination = await Post.find(filter)
             .limit(limit)
             .skip(limit * (currentPage - 1))
             .sort({ createdAt: -1 });
 
-        const totalPages = Math.ceil(await Post.countDocuments({}) / limit)
+        const totalPages = Math.ceil(await Post.countDocuments(filter) / limit)
 
         return NextResponse.json({ posts: postPagination, totalPages, currentPage, lastPage: totalPages === currentPage })
     } catch (error) {

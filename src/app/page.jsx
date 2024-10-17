@@ -39,6 +39,23 @@ export default function Home() {
     })
   }
 
+  const filterPostData = (filter) => {
+    axiosGet({ url: `/api/posts?page=${page}&${filter}` })
+      .then(res => {
+        setPosts({
+          posts: res.posts,
+          lastPage: res.lastPage
+        });
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        setLoading(false)
+        setPageLoading(false)
+      })
+  }
+
+  // filterPostData('search=das&category=deportes')
+
   return (
     // Vista inicial posts
     <div className="w-full h-full p-11">

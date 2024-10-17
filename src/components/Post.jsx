@@ -39,7 +39,7 @@ import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
 
 
-const MAX_LENGTH = 100;
+const MAX_LENGTH = 200;
 
 export default function Post({ post, deletePostFromState }) {
     const { data } = useSession();
@@ -92,7 +92,7 @@ export default function Post({ post, deletePostFromState }) {
     }
 
     return (
-        <Card className="w-full max-w-[95%] p-3 bg-white shadow-md rounded-lg mx-auto relative overflow-hidden">
+        <Card className="w-full max-w-[95%] flex flex-col p-3 border-2 bg-white shadow-md rounded-lg mx-auto relative overflow-hidden">
             <CardHeader className="flex flex-row justify-between items-center p-0 mt-4 pr-5">
                 {post.category && <Badge variant="secondary">{post.category}</Badge>}
                 <CardDescription className="text-gray-500 text-sm m-0">
@@ -103,11 +103,11 @@ export default function Post({ post, deletePostFromState }) {
 
             <CardHeader className="p-1">
                 {post.title && (
-                    <CardTitle className="text-lg font-semibold mt-2">{post.title}</CardTitle>
+                    <CardTitle className="text-xl font-semibold mt-2">{post.title}</CardTitle>
                 )}
                 {post.description && (
-                    <div className={`relative ${isDescriptionExpanded ? 'h-[150px] overflow-y-scroll' : ''}`}>
-                        <CardDescription className="text-gray-600">
+                    <div className={`relative ${isDescriptionExpanded ? 'overflow-y-auto' : ''}`}>
+                        <CardDescription className="text-gray-600 pr-1">
                             {renderTruncatedText(post.description, isDescriptionExpanded)}
                             {post.description.length > MAX_LENGTH && (
                                 <Button
@@ -123,12 +123,15 @@ export default function Post({ post, deletePostFromState }) {
                 )}
             </CardHeader>
 
+            <hr className='my-5' />
+
             <CardContent className="p-0">
                 {post.ai_response && (
                     <>
                         <HoverCard>
                             <HoverCardTrigger asChild>
                                 <Button variant="none" className="p-0">
+                                    <AvatarComponent />
                                     <Badge variant="secondary" className="bg-green-500 text-white hover:text-black">
                                         Centaury AI
                                     </Badge>
@@ -148,9 +151,8 @@ export default function Post({ post, deletePostFromState }) {
                         </HoverCard>
 
                         <div className="flex items-center overflow-hidden">
-                            <AvatarComponent />
-                            <div className={`text-gray-600 ${isAIResponseExpanded ? 'h-[150px] overflow-y-scroll' : ''}`}>
-                                <Markdown className="inline text-sm">
+                            <div className={`text-gray-600 ${isAIResponseExpanded ? 'h-[250px] overflow-y-auto' : ''}`}>
+                                <Markdown className="inline text-sm pr-1">
                                     {renderTruncatedText(post.ai_response, isAIResponseExpanded)}
                                 </Markdown>
                                 {post.ai_response.length > MAX_LENGTH && (
@@ -169,7 +171,7 @@ export default function Post({ post, deletePostFromState }) {
             </CardContent>
 
             {post.image && post.image.length > 0 && (
-                <CardContent className="p-1">
+                <CardContent className="p-1 flex-1">
                     <div className="w-full h-[450px] overflow-hidden rounded-lg">
                         <img
                             src={post.image[0]}
