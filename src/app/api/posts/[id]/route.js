@@ -3,30 +3,42 @@ import Post from "@/models/Post";
 import { NextResponse } from "next/server";
 
 export async function GET(_, { params }) {
-    await dbConnect()
+    try {
+        await dbConnect()
 
-    const post = await Post.findById(params.id)
-    if (!post) return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+        const post = await Post.findById(params.id)
+        if (!post) return NextResponse.json({ error: 'Post not found' }, { status: 404 })
 
-    return NextResponse.json(post)
+        return NextResponse.json(post)
+    } catch (error) {
+        return NextResponse.json({ message: 'Error al realizar la peticion', error: error.message }, { status: 500 })
+    }
 }
 
 export async function PUT(req, { params }) {
-    await dbConnect()
+    try {
+        await dbConnect()
 
-    const body = await req.json()
+        const body = await req.json()
 
-    const updatedPost = await Post.findByIdAndUpdate(params.id, body, { new: true })
-    if (!updatedPost) return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+        const updatedPost = await Post.findByIdAndUpdate(params.id, body, { new: true })
+        if (!updatedPost) return NextResponse.json({ error: 'Post not found' }, { status: 404 })
 
-    return NextResponse.json(updatedPost)
+        return NextResponse.json(updatedPost)
+    } catch (error) {
+        return NextResponse.json({ message: 'Error al realizar la peticion', error: error.message }, { status: 500 })
+    }
 }
 
 export async function DELETE(_, { params }) {
-    await dbConnect()
+    try {
+        await dbConnect()
 
-    const deletedPost = await Post.findByIdAndDelete(params.id)
-    if (!deletedPost) return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+        const deletedPost = await Post.findByIdAndDelete(params.id)
+        if (!deletedPost) return NextResponse.json({ error: 'Post not found' }, { status: 404 })
 
-    return NextResponse.json(deletedPost)
+        return NextResponse.json(deletedPost)
+    } catch (error) {
+        return NextResponse.json({ message: 'Error al realizar la peticion', error: error.message }, { status: 500 })
+    }
 }

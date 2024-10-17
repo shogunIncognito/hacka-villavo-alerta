@@ -5,9 +5,13 @@ import jwt from 'jsonwebtoken'
 import RegisteredEmails from "@/models/RegisteredEmails";
 
 export async function GET() {
-  await dbConnect();
-  const emails = await registeredEmails.find({});
-  return NextResponse.json(emails);
+  try {
+    await dbConnect();
+    const emails = await registeredEmails.find({});
+    return NextResponse.json(emails);
+  } catch (error) {
+    return NextResponse.json({ message: 'Error al realizar la peticion', error: error.message }, { status: 500 })
+  }
 }
 
 export async function POST(req) {
