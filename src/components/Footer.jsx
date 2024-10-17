@@ -7,7 +7,7 @@ export default function Footer() {
     return (
         <footer className="w-full h-auto bg-primary flex flex-col md:flex-row justify-between items-center p-4">
             <div className="flex items-center mb-4 md:mb-0">
-                <span className="text-white text-sm text-center md:text-left">© 2024 Villavo Alertas™. Todos los derechos reservados.</span>
+                <span className="text-white text-sm text-center md:text-left">© {new Date().getFullYear()} Villavo Alertas™. Todos los derechos reservados.</span>
             </div>
             <div className="flex items-center space-x-4">
                 <Link href='https://www.gov.co/' aria-label="Government Website" className="w-auto" target="_blank">

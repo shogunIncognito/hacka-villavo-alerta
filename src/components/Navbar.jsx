@@ -38,7 +38,7 @@ export default function Navbar() {
                             </Button>
                         </Link>
                         <Button onClick={handleLogout} className="bg-red-500 hover:bg-red-600">
-                            <LogOut className="mr-2 h-4 w-4" /> Logout
+                            <LogOut className="mr-2 h-4 w-4" /> Cerrar sesión
                         </Button>
                     </>
                 ) : (

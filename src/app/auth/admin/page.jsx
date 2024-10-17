@@ -60,7 +60,7 @@ export default function Login() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-center">
-            <Button>Iniciar sesion</Button>
+            <Button>Iniciar sesión</Button>
           </CardFooter>
         </form>
       </Card>
