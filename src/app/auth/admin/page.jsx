@@ -2,7 +2,6 @@
 
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -20,11 +19,16 @@ import logo from '@/assets/logo.png'
 import loginBackground from '@/assets/login-background.png'
 import Image from 'next/image'
 import { toast } from 'sonner'
+import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 
 export default function Login() {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
+
   const handleLogin = async (e) => {
     e.preventDefault()
+    setLoading(true)
 
     const values = Object.fromEntries(new FormData(e.target).entries())
 
@@ -35,11 +39,13 @@ export default function Login() {
         toast.success('Inicio de sesión exitoso.',)
         router.replace('/')
       })
+      .finally(() => setLoading(false))
+
   }
 
   return (
     <div className='flex justify-center items-center h-full w-full flex-1'>
-      <Button className="absolute top-2 left-2" onClick={() => router.replace('/')}>Regresar</Button>
+      <Button className="absolute top-14 left-4" onClick={() => router.replace('/')}>Regresar</Button>
       <Card className="w-[400px] shadow-lg">
         <form onSubmit={handleLogin}>
           <CardHeader>
@@ -60,7 +66,12 @@ export default function Login() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-center">
-            <Button>Iniciar sesión</Button>
+            <Button
+              disabled={loading}
+              className="w-1/3"
+            >
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Iniciar sesión'}
+            </Button>
           </CardFooter>
         </form>
       </Card>
