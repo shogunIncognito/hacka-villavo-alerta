@@ -3,9 +3,8 @@
 import { useState, useRef } from 'react'
 import { Upload } from 'lucide-react'
 
-export default function FileUpload({ setFile }) {
+export default function FileUpload({ setFile, url, setUrl }) {
   const [isDragging, setIsDragging] = useState(false)
-  const [preview, setPreview] = useState(null)
   const fileInputRef = useRef(null)
 
   const handleDragEnter = (e) => {
@@ -33,7 +32,7 @@ export default function FileUpload({ setFile }) {
       const file = e.dataTransfer.files[0]
       const url = URL.createObjectURL(file)
       setFile({ file, url })
-      setPreview(url)
+      setUrl(url)
     }
   }
 
@@ -42,7 +41,7 @@ export default function FileUpload({ setFile }) {
       const file = e.target.files[0]
       const url = URL.createObjectURL(file)
       setFile({ file, url })
-      setPreview(url)
+      setUrl(url)
     }
   }
 
@@ -55,22 +54,29 @@ export default function FileUpload({ setFile }) {
       onDrop={handleDrop}
       onClick={() => fileInputRef.current?.click()}
     >
-      <Upload className="w-4 h-4 mx-auto my-2 text-blue-500 mb-4" />
-      <p className="text-sm text-gray-500 mb-2">
-        Haga clic o arrastre el archivo a esta área para cargarlo
-      </p>
+      {!url && (
+        <>
+          <Upload className="w-12 h-12 mx-auto my-2 text-primary" />
+          <p className="text-sm text-muted-foreground mb-2">
+            Haga clic o arrastre la imagen a esta área para cargarlo
+          </p>
+        </>
+      )}
       <input
         type="file"
-        className="hidden"
+        className="sr-only"
         ref={fileInputRef}
         onChange={handleFileInput}
+        accept="image/*"
       />
-      {preview && (
-        <img
-          src={preview}
-          alt="Vista previa"
-          className="mt-4 mx-auto h-24 w-24 object-cover"
-        />
+      {url && (
+        <div className="relative inline-block">
+          <img
+            src={url}
+            alt="Vista previa"
+            className="mt-4 mx-auto h-32 w-32 object-cover rounded-lg"
+          />
+        </div>
       )}
     </div>
   )

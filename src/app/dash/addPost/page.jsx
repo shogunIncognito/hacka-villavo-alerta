@@ -34,6 +34,7 @@ export default function AddPost() {
     const [file, setFile] = useState(null);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [imageUrl, setImageUrl] = useState(null)
     const { data: session } = useSession();
 
     const validate = () => {
@@ -76,7 +77,7 @@ export default function AddPost() {
         const newErrors = validate();
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-            Object.values(newErrors).forEach((error) => toast.error(error));
+            Object.values(newErrors).forEach((error) => console.log());
             return;
         }
 
@@ -102,6 +103,7 @@ export default function AddPost() {
             setTitle("");
             setDescription("");
             setCategory("");
+            setImageUrl(null)
             setSwitchValidate(false);
             setFile(null);
         } catch (error) {
@@ -113,8 +115,8 @@ export default function AddPost() {
 
     return (
         <>
-            <div className="flex justify-center items-center h-[85vh]">
-                <Card className="w-[550px]">
+            <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh]">
+                <Card className="w-[650px] 2xl:w-[850px] 2xl:">
                     <CardHeader>
                         <CardTitle>Crear Nueva Alerta</CardTitle>
                         <CardDescription>Deploy your new project in one-click.</CardDescription>
@@ -204,7 +206,7 @@ export default function AddPost() {
                                     </Label>
                                 </div>
                                 <div className="flex justify-center items-center">
-                                    <FileUpload setFile={setFile} />
+                                    <FileUpload setFile={setFile} setUrl={setImageUrl} url={imageUrl} />
                                 </div>
                                 {errors.file && (
                                     <p className="text-red-500 text-sm text-center">
