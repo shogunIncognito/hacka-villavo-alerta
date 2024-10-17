@@ -1,15 +1,22 @@
-'use client'
+'use client';
 
 import Image from 'next/image';
 import logo from '@/assets/logo.png';
 import Link from 'next/link';
-
 import SubscribeModal from './SubscribeModal';
 import { Button } from './ui/button';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
+import { toast } from 'sonner';
+import { LogOut, Plus } from "lucide-react"
 
 export default function Navbar() {
     const { data } = useSession();
+
+    const handleLogout = () => {
+        signOut()
+            .then(() => toast.success('Sesión cerrada'))
+            .catch(() => toast.error('Ha ocurrido un error'));
+    };
 
     return (
         <header className="w-full h-[70px] bg-[#2563eb] flex justify-between items-center px-4">
@@ -19,13 +26,17 @@ export default function Navbar() {
                 </Link>
             </div>
             <div className="flex items-center gap-5">
-                {/* si hay datos de session muestra el boton de crear post */}
                 {data ? (
-                    <Link href='/dash/addpost'>
-                        <Button className="bg-green-500 hover:bg-green-600">
-                            Crear Post
+                    <>
+                        <Link href='/dash/addPost'>
+                            <Button className="bg-green-500 hover:bg-green-600">
+                                <Plus className="mr-2 h-4 w-4" /> Publicar
+                            </Button>
+                        </Link>
+                        <Button onClick={handleLogout} className="bg-red-500 hover:bg-red-600">
+                            <LogOut className="mr-2 h-4 w-4" /> Logout
                         </Button>
-                    </Link>
+                    </>
                 ) : (
                     <SubscribeModal />
                 )}
