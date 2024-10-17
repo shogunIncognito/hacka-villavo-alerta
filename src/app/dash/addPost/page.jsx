@@ -85,17 +85,17 @@ export default function AddPost() {
         try {
             const imageUrl = await uploadImageToCloudinary(file);
 
-            await axiosPost({
-                url: "/api/posts",
-                data: {
-                    title: title,
-                    description: description,
-                    category: category,
-                    generateAIResponse: switchValidate,
-                    image: imageUrl,
-                    author: author,
-                },
-            });
+            // await axiosPost({
+            //     url: "/api/posts",
+            //     data: {
+            //         title: title,
+            //         description: description,
+            //         category: category,
+            //         generateAIResponse: switchValidate,
+            //         image: imageUrl,
+            //         author: author,
+            //     },
+            // });
 
             toast.success("Post creado exitosamente");
             setErrors({});
@@ -116,7 +116,7 @@ export default function AddPost() {
         <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh] relative">
             <Card className="w-[650px] 2xl:w-[850px] relative rounded-lg">
                 {isSubmitting && (
-                    <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10 rounded-lg">
+                    <div className="absolute inset-0 bg-white bg-opacity-50 flex justify-center items-center z-10 rounded-lg">
                         <Spinner className="h-auto w-auto" />
                     </div>
                 )}

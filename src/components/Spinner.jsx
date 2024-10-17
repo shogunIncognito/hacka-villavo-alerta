@@ -1,15 +1,15 @@
 export default function Spinner() {
     return (
         <div className="w-10 h-10 mx-auto my-24 grid grid-cols-3 grid-rows-3 gap-0">
-            <div className="w-full h-full bg-white animate-scale-delay1"></div>
-            <div className="w-full h-full bg-white animate-scale-delay2"></div>
-            <div className="w-full h-full bg-white animate-scale-delay3"></div>
-            <div className="w-full h-full bg-white animate-scale-delay4"></div>
-            <div className="w-full h-full bg-white animate-scale-delay5"></div>
-            <div className="w-full h-full bg-white animate-scale-delay6"></div>
-            <div className="w-full h-full bg-white animate-scale-delay7"></div>
-            <div className="w-full h-full bg-white animate-scale-delay8"></div>
-            <div className="w-full h-full bg-white animate-scale-delay9"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay1"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay2"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay3"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay4"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay5"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay6"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay7"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay8"></div>
+            <div className="w-full h-full bg-primary animate-scale-delay9"></div>
 
             <style jsx>{`
                 @keyframes scale {
