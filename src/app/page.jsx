@@ -15,8 +15,7 @@ export default function Home() {
   useEffect(() => {
     axiosGet({ url: '/api/posts' })
       .then(res => {
-        const sortedPosts = res.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setPosts(sortedPosts);
+        setPosts(res.posts);
       })
       .catch(error => console.log(error))
       .finally(() => setLoading(false))
