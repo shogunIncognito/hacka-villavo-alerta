@@ -8,15 +8,19 @@ import { Button } from './ui/button';
 import { useSession, signOut } from 'next-auth/react';
 import { toast } from 'sonner';
 import { LogOut, Plus } from "lucide-react"
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
     const { data } = useSession();
+    const pathname = usePathname()
 
     const handleLogout = () => {
         signOut()
             .then(() => toast.success('Sesión cerrada'))
             .catch(() => toast.error('Ha ocurrido un error'));
     };
+
+    if (['/auth/admin'].includes(pathname)) return null
 
     return (
         <header className="w-full h-[70px] bg-[#2563eb] flex justify-between items-center px-4">

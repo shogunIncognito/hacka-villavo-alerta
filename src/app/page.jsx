@@ -10,17 +10,16 @@ import { SkeletonCard } from "@/components/SkeletonCard";
 export default function Home() {
 
   const { getPosts, setPosts } = usePosts()
-  const [loanding, setLoanding] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setLoanding(true)
     axiosGet({ url: '/api/posts' })
       .then(res => {
         const sortedPosts = res.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setPosts(sortedPosts);
       })
       .catch(error => console.log(error))
-      .finally(() => setLoanding(false))
+      .finally(() => setLoading(false))
   }, [])
 
   return (
@@ -29,7 +28,7 @@ export default function Home() {
       <main className="">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {
-            loanding ?
+            loading ?
               SkeletonPosts.map((skeleton, index) => {
                 return (
                   <SkeletonCard key={index} />

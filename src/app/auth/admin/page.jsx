@@ -39,6 +39,7 @@ export default function Login() {
 
   return (
     <div className='flex justify-center items-center h-full w-full flex-1'>
+      <Button className="absolute top-2 left-2" onClick={() => router.replace('/')}>Regresar</Button>
       <Card className="w-[400px] shadow-lg">
         <form onSubmit={handleLogin}>
           <CardHeader>
@@ -50,11 +51,11 @@ export default function Login() {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label className='font-bold' htmlFor="email">Correo</Label>
-                <Input id="email" name="email" placeholder="example@gmail.com" />
+                <Input id="email" name="email" placeholder="correo@gmail.com" />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label className='font-bold' htmlFor="password">Contraseña</Label>
-                <Input id="password" name="password" type="password" placeholder="******" />
+                <Input id="password" name="password" type="password" placeholder="**********" />
               </div>
             </div>
           </CardContent>
