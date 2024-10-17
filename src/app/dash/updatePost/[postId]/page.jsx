@@ -133,14 +133,21 @@ export default function UpdatePost({ params }) {
         } catch (error) {
             toast.error("Error al actualizar el post");
         } finally {
+            navigate.push('/')
             setIsSubmitting(false);
+
         }
     };
 
     return (
         <>
-            <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh]">
+            <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh] relative">
                 <Card className="w-[650px] 2xl:w-[850px] 2xl:">
+                    {isSubmitting && (
+                        <div className="absolute inset-0 bg-white bg-opacity-50 flex justify-center items-center z-10 rounded-lg">
+                            <Spinner className="h-auto w-auto" />
+                        </div>
+                    )}
                     <CardHeader>
                         <CardTitle>Editar Post</CardTitle>
                     </CardHeader>
