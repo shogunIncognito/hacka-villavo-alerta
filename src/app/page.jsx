@@ -58,8 +58,7 @@ export default function Home() {
   // filterPostData('search=das&category=deportes')
 
   return (
-    // Vista inicial posts
-    <div className="w-full h-full p-11">
+    <div className="w-full h-full md:p-11 p-2">
       <main>
         <Search />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
