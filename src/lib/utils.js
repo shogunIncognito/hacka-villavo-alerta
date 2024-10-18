@@ -38,7 +38,7 @@ export async function sendNewPostEmails({ emails, post }) {
         
         ${post.ai_response ? `
         <div style="margin-top: 20px; padding: 15px; background-color: #e0f7fa; border-radius: 8px;">
-          <h3 style="font-size: 18px; color: #007BFF;">Conclusión de Centauri IA:</h3>
+          <h3 style="font-size: 18px; color: #007BFF;">Conclusión de Centaury IA:</h3>
           <div style="font-size: 16px; color: #333; line-height: 1.6;">
             ${aiResponseHTML}
           </div>
