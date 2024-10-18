@@ -1,6 +1,7 @@
 "use client"
 
 import Post from "@/components/Post";
+import Search from "@/components/Search";
 import { useEffect, useState } from "react";
 import { axiosGet } from "@/helpers/requests/get";
 import { SkeletonPosts } from "@/helpers/helpersAll";
@@ -60,6 +61,7 @@ export default function Home() {
     // Vista inicial posts
     <div className="w-full h-full p-11">
       <main>
+        <Search />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {
             loading ?
