@@ -50,9 +50,8 @@ export async function POST(req) {
         })
         const savedPost = await newPost.save()
 
-        // DESACTIVADO POR AHORA
-        // const emails = await RegisteredEmails.find({})
-        // sendNewPostEmails({ emails, post: savedPost })
+        const emails = await RegisteredEmails.find({})
+        sendNewPostEmails({ emails, post: savedPost })
 
         return NextResponse.json(savedPost)
     } catch (error) {

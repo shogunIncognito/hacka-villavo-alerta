@@ -48,6 +48,7 @@ export default function UpdatePost({ params }) {
                 setDescription(res.description)
                 setCategory(res.category)
                 setImageUrl(res.image[0])
+                setSwitchValidate(res.ai_response ? true : false)
             })
     }, [])
 
@@ -109,6 +110,7 @@ export default function UpdatePost({ params }) {
             }
 
 
+            console.log(switchValidate);
 
             await axiosPut({
                 url: `/api/posts/${params.postId}`,

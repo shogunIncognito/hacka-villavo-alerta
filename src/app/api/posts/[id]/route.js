@@ -1,5 +1,6 @@
 import { dbConnect } from "@/db/db_config";
 import Post from "@/models/Post";
+import { AIConclusions } from "@/services/api";
 import { NextResponse } from "next/server";
 
 export async function GET(_, { params }) {
@@ -21,7 +22,10 @@ export async function PUT(req, { params }) {
 
         const body = await req.json()
 
-        const updatedPost = await Post.findByIdAndUpdate(params.id, body, { new: true })
+        const updatedPost = await Post.findByIdAndUpdate(params.id, {
+            ...body,
+            ai_response: body.generateAIResponse ? await AIConclusions(body) : null
+        }, { new: true })
         if (!updatedPost) return NextResponse.json({ error: 'Post not found' }, { status: 404 })
 
         return NextResponse.json(updatedPost)
