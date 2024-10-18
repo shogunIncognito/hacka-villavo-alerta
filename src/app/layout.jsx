@@ -2,7 +2,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Ola from "@/components/ola";
-import OlaFooter from "@/components/olaFooter";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import SessionAuthProvider from "@/context/SessionProvider";
