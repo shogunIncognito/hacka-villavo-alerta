@@ -141,15 +141,15 @@ export default function UpdatePost({ params }) {
 
     return (
         <>
-            <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh] relative">
-                <Card className="w-[650px] 2xl:w-[850px] 2xl:">
+            <div className="flex justify-center items-center py-7 my-5 2xl:my-0 flex-1 relative">
+                <Card className="w-[650px] border-2 2xl:w-[850px] 2xl:">
                     {isSubmitting && (
                         <div className="absolute inset-0 bg-white bg-opacity-50 flex justify-center items-center z-10 rounded-lg">
                             <Spinner className="h-auto w-auto" />
                         </div>
                     )}
                     <CardHeader>
-                        <CardTitle>Editar Post</CardTitle>
+                        <CardTitle>Editar Publicación</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={onSubmit}>
