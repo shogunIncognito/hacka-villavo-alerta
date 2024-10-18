@@ -30,7 +30,7 @@ export async function GET(req) {
 
         const totalPages = Math.ceil(await Post.countDocuments(filter) / limit)
 
-        return NextResponse.json({ posts: postPagination, totalPages, currentPage, lastPage: totalPages === currentPage })
+        return NextResponse.json({ posts: postPagination, totalPages, currentPage, lastPage: (totalPages === currentPage) || (totalPages === 0) })
     } catch (error) {
         return NextResponse.json({ message: 'Error al realizar la peticion', error: error.message }, { status: 500 })
     }

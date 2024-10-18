@@ -18,27 +18,11 @@ export const Search = ({ setPosts }) => {
     const [query, setQuery] = useState('');
     const [category, setCategory] = useState('');
 
-    // const handleSearch = () => {
-    //     if (query.trim() || category) {
-    //         console.log(`Searching for ${query} in category ${category}`);
-    //         // Limpia los campos después de buscar
-    //         setQuery('');
-    //         setCategory('');
-    //     }
-    // };
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    };
-
     const onSubmit = (e) => {
         e.preventDefault()
 
         axiosGet({ url: `/api/posts?search=${query.trim()}&category=${category.trim()}` })
             .then(res => {
-                console.log(res)
                 setPosts(res)
             })
             .catch(error => console.log(error))
@@ -53,7 +37,6 @@ export const Search = ({ setPosts }) => {
                         type="text"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        onKeyPress={handleKeyPress}
                         placeholder="Buscar..."
                         className="search-input p-2 pl-10 border border-primary rounded-md focus:outline-none focus:ring focus:ring-primary w-full text-primary"
                         aria-label="Search"
@@ -71,13 +54,9 @@ export const Search = ({ setPosts }) => {
                                 {/* <SelectItem value="" className="text-primary">Todas</SelectItem> */}
                                 <SelectItem value=" " className="text-primary">Todas</SelectItem>
                                 {
-                                    categorys.map((cty) => {
-                                        return (
-                                            <>
-                                                <SelectItem value={cty} className="text-primary">{cty}</SelectItem>
-                                            </>
-                                        )
-                                    })
+                                    categorys.map((cty) => (
+                                        <SelectItem value={cty} key={cty} className="text-primary">{cty}</SelectItem>
+                                    ))
                                 }
                             </SelectGroup>
                         </SelectContent>

@@ -132,7 +132,7 @@ export default function AddPost() {
 
     return (
         <div className="flex justify-center items-center py-7 my-5 2xl:my-0 flex-1 relative">
-            <Card className="w-[650px] 2xl:w-[850px] border-2 relative rounded-lg">
+            <Card className="w-[650px] 2xl:w-[850px] mx-2 border-2 relative rounded-lg">
                 {isSubmitting && (
                     <div className="absolute inset-0 bg-white bg-opacity-50 flex justify-center items-center z-10 rounded-lg">
                         <Spinner className="h-auto w-auto" />

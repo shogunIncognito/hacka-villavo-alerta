@@ -6,5 +6,8 @@ export const categorys = [
     "Trafico",
     "Seguridad",
     "Clima",
-    "Salud"
+    "Salud",
+    "Delincuencia",
+    "Natural",
+    "Desastres",
 ]
