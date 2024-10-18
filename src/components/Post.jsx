@@ -93,11 +93,11 @@ export default function Post({ post, deletePostFromState }) {
 
     return (
         <Card className="w-full max-w-[95%] flex flex-col p-3 border-2 bg-white shadow-md rounded-lg mx-auto relative overflow-hidden">
-            <CardHeader className="flex flex-row justify-between items-center p-0 mt-4 pr-5">
+            <CardHeader className="flex flex-col md:flex-row justify-between items-center p-0 mt-4 pr-5">
                 {post.category && <Badge variant="secondary">{post.category}</Badge>}
                 <CardDescription className="text-gray-500 text-sm m-0">
                     <Calendar className="inline mr-1" size={16} />
-                    {formatDate}
+                    <span>{formatDate}</span>
                 </CardDescription>
             </CardHeader>
 

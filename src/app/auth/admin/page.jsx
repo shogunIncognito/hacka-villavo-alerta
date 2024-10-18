@@ -46,7 +46,7 @@ export default function Login() {
   return (
     <div className='flex justify-center items-center h-full w-full flex-1'>
       <Button className="absolute top-14 left-4" onClick={() => router.replace('/')}>Regresar</Button>
-      <Card className="w-[400px] shadow-lg">
+      <Card className="w-[400px] mx-4 shadow-lg">
         <form onSubmit={handleLogin}>
           <CardHeader>
             <Image alt='villavoAlertaslogo' src={logo} className="object-cover invert w-68 h-28" />
