@@ -27,6 +27,7 @@ import axios from "axios";
 import { axiosPost } from "@/helpers/requests/post";
 import { useSession } from "next-auth/react";
 import { AIResumen } from '@/services/api';
+import { categorys } from '@/helpers/helpersAll';
 
 export default function AddPost() {
     const [title, setTitle] = useState("");
@@ -197,10 +198,11 @@ export default function AddPost() {
                                                 <SelectValue placeholder="Categoría" />
                                             </SelectTrigger>
                                             <SelectContent position="popper">
-                                                <SelectItem value="Trafico">Trafico</SelectItem>
-                                                <SelectItem value="Seguridad">Seguridad</SelectItem>
-                                                <SelectItem value="Clima">Clima</SelectItem>
-                                                <SelectItem value="Salud">Salud</SelectItem>
+                                                {categorys.map((cty) => (
+                                                    <SelectItem value={cty} key={cty}>
+                                                        {cty}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                         {errors.category && (

@@ -24,7 +24,8 @@ export default function Home() {
       .then(res => {
         setPosts({
           posts: [...posts.posts, ...res.posts],
-          lastPage: res.lastPage
+          lastPage: res.lastPage,
+          totalPages: res.totalPages
         });
       })
       .catch(error => console.log(error))
@@ -40,23 +41,6 @@ export default function Home() {
       lastPage: posts.lastPage
     })
   }
-
-  const filterPostData = (filter) => {
-    axiosGet({ url: `/api/posts?page=${page}&${filter}` })
-      .then(res => {
-        setPosts({
-          posts: res.posts,
-          lastPage: res.lastPage
-        });
-      })
-      .catch(error => console.log(error))
-      .finally(() => {
-        setLoading(false)
-        setPageLoading(false)
-      })
-  }
-
-  // filterPostData('search=das&category=deportes')
 
   return (
     <div className="w-full h-full md:p-11 p-2">
@@ -75,7 +59,7 @@ export default function Home() {
                 <>
                   <div className="w-full h-[60vh] col-span-2 text-center">
                     <div className="w-full h-full flex justify-center items-center gap-3">
-                      <HeartCrack /> <span>No se econtraron resultados</span> <HeartCrack />
+                      <HeartCrack /> <span>No se encontraron resultados</span> <HeartCrack />
                     </div>
                   </div>
                 </> :
@@ -88,7 +72,7 @@ export default function Home() {
 
         </div>
 
-        {!posts.lastPage && (
+        {!posts.lastPage && posts.totalPages > page && (
           <div className="flex justify-center mt-10">
             <Button
               onClick={() => {
