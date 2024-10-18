@@ -13,19 +13,22 @@ import {
 import { Search as LucideSearch } from 'lucide-react';
 import { categorys } from '@/helpers/helpersAll';
 import { axiosGet } from '@/helpers/requests/get';
+import { Loader2 } from 'lucide-react'
 
 export const Search = ({ setPosts }) => {
     const [query, setQuery] = useState('');
     const [category, setCategory] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
-
+        setLoading(true)
         axiosGet({ url: `/api/posts?search=${query.trim()}&category=${category.trim()}` })
             .then(res => {
                 setPosts(res)
             })
             .catch(error => console.log(error))
+            .finally(() => setLoading(false))
     }
 
 
@@ -63,9 +66,12 @@ export const Search = ({ setPosts }) => {
                     </Select>
                     <Button
                         disabled={!query.trim() && !category}
-                        className={`p-2 rounded-md w-full md:w-auto ${!query.trim() && !category ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+                        className={`p-2 rounded-md w-[118px] ${!query.trim() && !category ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
                     >
-                        Buscar
+                        {
+                            loading ? <Loader2 className="h-4 w-4 animate-spin" /> :
+                                <span>Buscar</span>
+                        }
                     </Button>
                 </div>
             </div>
