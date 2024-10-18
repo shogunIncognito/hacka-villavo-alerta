@@ -66,3 +66,4 @@ El proyecto puede desplegarse fácilmente en plataformas como Vercel, que ofrece
 - **Juankio**: [GitHub](https://github.com/juankio)
 - **EmersonRoncancio**: [GitHub](https://github.com/EmersonRoncancio)
 - **Yo**: [GitHub](https://github.com/shogunIncognito)
+
