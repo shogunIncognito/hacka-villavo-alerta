@@ -54,7 +54,7 @@ export default function SubscribeModal() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" className="bg-white text-primary">
+                <Button variant="outline" className="md:bg-white md:text-primary w-full">
                     Suscríbete
                 </Button>
             </DialogTrigger>
