@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function Ola() {
+export default function Ola({ rotateClass }) {
     return (
-        <div className="transform rotate-180" style={{ top: '100%' }}>
+        <div className={`transform ${rotateClass}`} style={{ top: '100%' }}>
             <svg
                 className="w-full h-20 text-primary pointer-events-none"
                 preserveAspectRatio="none"
