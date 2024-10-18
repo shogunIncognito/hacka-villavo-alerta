@@ -61,7 +61,7 @@ export default function Home() {
     // Vista inicial posts
     <div className="w-full h-full p-11">
       <main>
-        <Search />
+        <Search setPosts={setPosts} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {
             loading ?
