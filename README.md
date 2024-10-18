@@ -67,3 +67,4 @@ El proyecto puede desplegarse fácilmente en plataformas como Vercel, que ofrece
 - **EmersonRoncancio**: [GitHub](https://github.com/EmersonRoncancio)
 - **Yo**: [GitHub](https://github.com/shogunIncognito)
 
+
