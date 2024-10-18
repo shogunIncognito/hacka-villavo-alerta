@@ -7,8 +7,18 @@ import SubscribeModal from './SubscribeModal';
 import { Button } from './ui/button';
 import { useSession, signOut } from 'next-auth/react';
 import { toast } from 'sonner';
-import { Bell, LogOut, Plus } from "lucide-react"
+import { Bell, LogOut, Plus, AlignJustify } from "lucide-react"
 import { usePathname } from 'next/navigation'
+import {
+    Menubar,
+    MenubarContent,
+    MenubarItem,
+    MenubarMenu,
+    MenubarSeparator,
+    MenubarShortcut,
+    MenubarTrigger,
+} from "@/components/ui/menubar"
+
 
 export default function Navbar() {
     const { data } = useSession();
@@ -39,11 +49,59 @@ export default function Navbar() {
         <header className="w-full h-[70px] bg-[#2563eb] flex justify-between items-center px-4">
             <div className="flex items-center">
                 <Link href='/'>
-                    <Image src={logo} alt='villavoAlertaslogo' className="object-cover w-48" />
+                    <Image src={logo} alt='villavoAlertaslogo' className="object-cover w-44 md:w-48" />
                 </Link>
             </div>
-            <div className="flex items-center gap-5">
-                <Bell onClick={handleNotifications} className="h-10 w-10 text-white cursor-pointer hover:bg-gray-500 p-2 rounded-full transition-all" />
+            {
+                data ?
+                    <>
+                        <div className='flex md:hidden'>
+                            <Menubar>
+                                <MenubarMenu>
+                                    <MenubarTrigger>
+                                        <AlignJustify />
+                                    </MenubarTrigger>
+                                    <MenubarContent>
+                                        <MenubarItem>
+                                            <Link className='w-full h-full flex justify-start items-center' href='/dash/addPost'>
+                                                <Plus className="mr-2 h-4 w-4" /> Publicar
+                                            </Link>
+                                        </MenubarItem>
+                                        <MenubarItem>
+                                            <button onClick={handleLogout} className="w-full h-full flex justify-start items-center">
+                                                <LogOut className="mr-2 h-4 w-4 " /> Cerrar sesión
+                                            </button>
+                                        </MenubarItem>
+                                        <MenubarItem>
+                                            <Bell onClick={handleNotifications} size={20} />
+                                        </MenubarItem>
+                                    </MenubarContent>
+                                </MenubarMenu>
+                            </Menubar>
+                        </div>
+                    </> :
+                    <>
+                        <div className='flex md:hidden'>
+                            <Menubar>
+                                <MenubarMenu>
+                                    <MenubarTrigger>
+                                        <AlignJustify />
+                                    </MenubarTrigger>
+                                    <MenubarContent>
+                                        <MenubarItem>
+                                            <SubscribeModal />
+                                        </MenubarItem>
+                                        <MenubarItem>
+                                            <Bell onClick={handleNotifications} size={20} />
+                                        </MenubarItem>
+                                    </MenubarContent>
+                                </MenubarMenu>
+                            </Menubar>
+                        </div>
+                    </>
+            }
+            <div className="hidden md:flex items-center gap-5">
+                <Bell onClick={handleNotifications} size={data ? 45 : 65} className={`text-white ${data ? null : "hover:text-slate-300"} cursor-pointer ${data ? "hover:bg-gray-500" : null} p-2 rounded-full transition-all`} />
                 {data ? (
                     <>
                         <Link href='/dash/addPost'>

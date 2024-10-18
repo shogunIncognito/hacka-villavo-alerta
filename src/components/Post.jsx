@@ -38,7 +38,6 @@ import { deletePost } from '@/services/api';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
 
-
 const MAX_LENGTH = 200;
 
 export default function Post({ post, deletePostFromState }) {
@@ -74,7 +73,7 @@ export default function Post({ post, deletePostFromState }) {
 
     const AvatarComponent = () => (
         <Avatar className="mr-2">
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarImage src="https://avatars.githubusercontent.com/u/74984894?v=4" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
         </Avatar>
     );
