@@ -142,7 +142,6 @@ export default function AddPost() {
                 <div className={`${isSubmitting ? 'opacity-50 pointer-events-none' : ''}`}>
                     <CardHeader>
                         <CardTitle>Crear Nueva Alerta</CardTitle>
-                        <CardDescription>Deploy your new project in one-click.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={onSubmit}>
