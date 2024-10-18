@@ -27,6 +27,7 @@ import { useSession } from "next-auth/react";
 import { axiosPut } from '@/helpers/requests/put';
 import { axiosGet } from '@/helpers/requests/get';
 import { useRouter } from 'next/navigation';
+import { categorys } from '@/helpers/helpersAll';
 
 export default function UpdatePost({ params }) {
     const [title, setTitle] = useState("");
@@ -214,10 +215,11 @@ export default function UpdatePost({ params }) {
                                                 <SelectValue placeholder="Categoría" />
                                             </SelectTrigger>
                                             <SelectContent position="popper">
-                                                <SelectItem value="Trafico">Trafico</SelectItem>
-                                                <SelectItem value="Seguridad">Seguridad</SelectItem>
-                                                <SelectItem value="Clima">Clima</SelectItem>
-                                                <SelectItem value="Salud">Salud</SelectItem>
+                                                {categorys.map((category) => (
+                                                    <SelectItem key={category} value={category}>
+                                                        {category}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                         {errors.category && (
