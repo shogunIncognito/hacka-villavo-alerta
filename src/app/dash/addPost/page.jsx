@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { axiosPost } from "@/helpers/requests/post";
 import { useSession } from "next-auth/react";
+import { AIResumen } from '@/services/api';
 
 export default function AddPost() {
     const [title, setTitle] = useState("");
@@ -98,6 +99,23 @@ export default function AddPost() {
             });
 
             toast.success("Post creado exitosamente");
+
+            // se manda una notificación a los subscriptores con la noticia resumida
+
+            const newNotification = new Notification("Nueva noticia publicada - VillavoAlertas", {
+                body: `${title} - ${await AIResumen({ title, description })}`,
+                data: {
+                    url: "/",
+                },
+            });
+
+            newNotification.onclick = (e) => {
+                e.preventDefault();
+                window.open(e.target.data.url, "_blank");
+            }
+
+            //
+
             setErrors({});
             setTitle("");
             setDescription("");
@@ -113,8 +131,8 @@ export default function AddPost() {
     };
 
     return (
-        <div className="flex justify-center items-center py-7 my-5 2xl:my-0 h-[110vh] 2xl:h-[90vh] relative">
-            <Card className="w-[650px] 2xl:w-[850px] relative rounded-lg">
+        <div className="flex justify-center items-center py-7 my-5 2xl:my-0 flex-1 relative">
+            <Card className="w-[650px] 2xl:w-[850px] border-2 relative rounded-lg">
                 {isSubmitting && (
                     <div className="absolute inset-0 bg-white bg-opacity-50 flex justify-center items-center z-10 rounded-lg">
                         <Spinner className="h-auto w-auto" />

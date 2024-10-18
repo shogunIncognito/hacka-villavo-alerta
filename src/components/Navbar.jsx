@@ -7,7 +7,7 @@ import SubscribeModal from './SubscribeModal';
 import { Button } from './ui/button';
 import { useSession, signOut } from 'next-auth/react';
 import { toast } from 'sonner';
-import { LogOut, Plus } from "lucide-react"
+import { Bell, LogOut, Plus } from "lucide-react"
 import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
@@ -20,6 +20,19 @@ export default function Navbar() {
             .catch(() => toast.error('Ha ocurrido un error'));
     };
 
+    const handleNotifications = () => {
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission()
+                .then((permission) => {
+                    if (permission === 'granted') {
+                        new Notification('Notificaciones activadas', {
+                            body: 'Ahora recibirás las nuevas noticias publicadas.',
+                        })
+                    }
+                })
+        }
+    }
+
     if (['/auth/admin'].includes(pathname)) return null
 
     return (
@@ -30,6 +43,7 @@ export default function Navbar() {
                 </Link>
             </div>
             <div className="flex items-center gap-5">
+                <Bell onClick={handleNotifications} className="h-10 w-10 text-white cursor-pointer hover:bg-gray-500 p-2 rounded-full transition-all" />
                 {data ? (
                     <>
                         <Link href='/dash/addPost'>
