@@ -8,6 +8,7 @@ import { SkeletonPosts } from "@/helpers/helpersAll";
 import { SkeletonCard } from "@/components/SkeletonCard";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { HeartCrack } from "lucide-react"
 
 export default function Home() {
   const [page, setPage] = useState(1)
@@ -59,7 +60,7 @@ export default function Home() {
 
   return (
     // Vista inicial posts
-    <div className="w-full h-full p-11">
+    <div className="w-full h-full md:p-11 p-2">
       <main>
         <Search setPosts={setPosts} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -71,11 +72,19 @@ export default function Home() {
                 )
               })
               :
-              posts.posts.map(post => {
-                return (
-                  <Post post={post} key={post._id} deletePostFromState={deletePostFromState} />
-                )
-              })
+              posts.posts.length <= 0 ?
+                <>
+                  <div className="w-full h-[60vh] col-span-2 text-center">
+                    <div className="w-full h-full flex justify-center items-center gap-3">
+                      <HeartCrack /> <span>No se econtraron resultados</span> <HeartCrack />
+                    </div>
+                  </div>
+                </> :
+                posts.posts.map(post => {
+                  return (
+                    <Post post={post} key={post._id} deletePostFromState={deletePostFromState} />
+                  )
+                })
           }
 
         </div>
