@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <div className="w-full h-full md:p-11 p-2">
       <main>
-        <Search />
+        <Search setPosts={setPosts} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {
             loading ?
