@@ -219,7 +219,7 @@ export default function Post({ post, deletePostFromState }) {
                             </DropdownMenuContent>
                         </DropdownMenu>
 
-                        <DialogContent>
+                        <DialogContent className="w-[90%] md:w-full">
                             <DialogHeader>
                                 <DialogTitle>¿Quieres eliminar la publicación?</DialogTitle>
                                 <DialogDescription>
